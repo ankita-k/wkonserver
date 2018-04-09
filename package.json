@@ -1,5 +1,5 @@
 {
-  "name": "wkon server",
+  "name": "wkonserver",
   "version": "1.0.0",
   "description": "This is wkon server",
   "main": "index.js",
