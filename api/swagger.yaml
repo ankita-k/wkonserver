@@ -1,0 +1,581 @@
+swagger: '2.0'
+info:
+  description: This is a server for WKON
+  version: 1.0.0
+  title: WKON
+host: 'localhost:8888'
+tags:
+  - name: user
+    description: Operations about user
+securityDefinitions:
+  key:
+    type: apiKey
+    in: header
+    name: Key
+schemes:
+  - http
+paths:
+  /user:
+    post:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: User
+  /user/createWithArray:
+    post:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Creates list of users with given input array
+      description: ''
+      operationId: createUsersWithArrayInput
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: List of user object
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: User
+  /user/createWithList:
+    post:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Creates list of users with given input array
+      description: ''
+      operationId: createUsersWithListInput
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: List of user object
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: User
+  /user/login:
+    get:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+        '400':
+          description: Invalid username/password supplied
+      x-swagger-router-controller: User
+  /user/logout:
+    get:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Logs out current logged in user session
+      description: ''
+      operationId: logoutUser
+      produces:
+        - application/xml
+        - application/json
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: User
+  /user/resetPassword:
+    put:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Logs out current logged in user session
+      description: ''
+      operationId: resetPassword
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/passwords'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: User
+  '/user/{id}':
+    get:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Get user by id
+      description: ''
+      operationId: getUserById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+      x-swagger-router-controller: User
+    put:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Updated user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: User not found
+      x-swagger-router-controller: User
+    delete:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+  /client:
+    post:
+      security:
+        - key: []
+      tags:
+        - client
+      summary: Create client
+      description: This can only be done by the logged in client.
+      operationId: createClient
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created client object
+          required: true
+          schema:
+            $ref: '#/definitions/Client'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: Client
+  /client/login:
+    get:
+      security:
+        - key: []
+      tags:
+        - client
+      summary: Logs client into the system
+      description: ''
+      operationId: loginclient
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+        '400':
+          description: Invalid username/password supplied
+      x-swagger-router-controller: Client
+  '/client/{id}':
+    get:
+      security:
+        - key: []
+      tags:
+        - client
+      summary: Get client by id
+      description: ''
+      operationId: getclientById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Client'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: Client not found
+      x-swagger-router-controller: Client
+    put:
+      security:
+        - key: []
+      tags:
+        - client
+      summary: Updated client
+      description: This can only be done by the logged in client.
+      operationId: updateClient
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: Detail that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated client object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '400':
+          description: Invalid client supplied
+        '404':
+          description: Client not found
+      x-swagger-router-controller: Client  
+    delete:
+      security:
+        - key: []
+      tags:
+        - client
+      summary: Delete client
+      description: This can only be done by the logged in client.
+      operationId: deleteclient
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The id that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: Client not found  
+  /project:
+    post:
+      security:
+        - key: []
+      tags:
+        - project
+      summary: Create project
+      description: This can only be done by the logged in user.
+      operationId: CreateProject
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created project object
+          required: true
+          schema:
+            $ref: '#/definitions/Project'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: Project
+  '/project/{id}':
+    get:
+      security:
+        - key: []
+      tags:
+        - project
+      summary: Get project by id
+      description: ''
+      operationId: getProjectById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Project'
+        '400':
+          description: Invalid Project Id supplied
+        '404':
+          description: Project not found
+      x-swagger-router-controller: Project
+    put:
+      security:
+        - key: []
+      tags:
+        - project
+      summary: Updated project
+      description: This can only be done by the logged in user.
+      operationId: updateProject
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: project not found
+      x-swagger-router-controller: User
+    delete:
+      security:
+        - key: []
+      tags:
+        - project
+      summary: Delete project
+      description: This can only be done by the logged in user.
+      operationId: deleteProject
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The project that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid project supplied
+        '404':
+          description: Project not found        
+definitions:
+  User:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      manager:
+        type: string
+      role:
+        type: string
+    example:
+      password: password
+      role: role
+      phone: phone
+      email: email
+      name: username
+    xml:
+      name: User
+  Client:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      manager:
+        type: string
+      role:
+        type: string
+    example:
+      password: password
+      role: role
+      phone: phone
+      email: email
+      name: username
+    xml:
+      name: Client
+  Project:
+    type: object
+    properties:
+      name:
+        type: string
+      requirement:
+        type: string
+      status:
+        type: string
+      technology:
+        type: string
+      expectedStartDate:
+        type: string
+      actualStartDate:
+        type: string
+      expectedEndDate:
+        type: string
+      actualEndDate:
+        type: string
+    example:
+      requirement: requirement
+      status: status
+      technology: technology
+      expectedStartDate: expectedStartDate
+      actualStartDate: actualStartDate
+      expectedEndDate: expectedEndDate
+      actualEndDate: actualEndDate
+      name: username
+    xml:
+      name: Project
+      
+  passwords:
+    type: object
+    properties:
+      id:
+        type: string
+      password:
+        type: string
+      newPassword:
+        type: string
+    example:
+      id: id
+      password: password
+      newPassword: newPassword
+    xml:
+      name: passwords
+      
