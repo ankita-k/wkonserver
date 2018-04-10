@@ -3,7 +3,7 @@ info:
   description: This is a server for WKON
   version: 1.0.0
   title: WKON
-host: 'http://mitapi.memeinfotech.com:5088'
+host: 'mitapi.memeinfotech.com:5088'
 tags:
   - name: user
     description: Operations about user
