@@ -308,6 +308,51 @@ paths:
         '400':
           description: Invalid username/password supplied
       x-swagger-router-controller: Client
+  /client/clientlist:
+    get:
+      security:
+        - key: []
+      tags:
+        - client
+      summary: Logs client into the system
+      description: ''
+      operationId: getClientList
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: userId
+          in: query
+          description: The user id of logged in user
+          required: true
+          type: string
+        - name: page
+          in: query
+          description: The page number
+          required: true
+          type: string
+        - name: limit
+          in: query
+          description: The limit of documents
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+        '400':
+          description: Invalid username/password supplied
+      x-swagger-router-controller: Client
   '/client/{id}':
     get:
       security:
