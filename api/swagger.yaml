@@ -358,7 +358,7 @@ paths:
           description: Updated client object
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/Client'
       responses:
         '400':
           description: Invalid client supplied
@@ -518,18 +518,21 @@ definitions:
         type: string
       email:
         type: string
-      password:
+      country:
         type: string
-      manager:
+      phoneNumber:
         type: string
-      role:
+      status:
+        type: string
+      userId: 
         type: string
     example:
-      password: password
-      role: role
-      phone: phone
+      status: status
+      country: country
+      phoneNumber: phone
       email: email
-      name: username
+      name: name
+      userId: userId
     xml:
       name: Client
   Project:

@@ -11,7 +11,16 @@ var Client = require('../models/client');
  **/
 exports.createClient = function (body) {
   return new Promise(function (resolve, reject) {
-    var client = new Client(body);
+    var client = new Client({
+      name: body.name,
+      password: 'password',
+      country: body.country,
+      email: body.email,
+      phoneNumber: body.phoneNumber,
+      status: body.status,
+      createdBy: body.userId,
+      updatedBy: body.userId
+    });
     // client.createdBy;
     client.save(function (err, client) {
       if (err) {
@@ -34,6 +43,21 @@ exports.createClient = function (body) {
   });
 }
 
+exports.getClientList = function (id, page, limit) {
+  return new Promise(function (resolve, reject) {
+    let perPage = limit ? limit : 10;
+    let pageCount = page ? pageCount : 0
+    Client.find({ createdBy: id })
+      .sort({ createdDate: -1 })
+      .limit(perPage)
+      .skip(perPage * pageCount)
+      .then(clientList => {
+        resolve(clientList);
+      }).catch(err => {
+        reject(err);
+      })
+  });
+}
 
 /**
  * Creates list of clients with given input array
@@ -71,18 +95,18 @@ exports.createclientsWithListInput = function (body) {
  **/
 exports.deleteclient = function (id) {
   return new Promise(function (resolve, reject) {
-    Client.findOneAndRemove({ _id: id}, (error, client) => {
-        console.log(client);
-        console.log(error)
-        if (error) { 
-          reject(error);
-          return;
-        }
-        if(client)
+    Client.findOneAndRemove({ _id: id }, (error, client) => {
+      console.log(client);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (client)
         resolve(client);
-        else
-        resolve({message:"No such client found"})
-      })
+      else
+        resolve({ message: "No such client found" })
+    })
   });
 }
 
@@ -96,19 +120,19 @@ exports.deleteclient = function (id) {
  **/
 exports.getclientById = function (id) {
   return new Promise(function (resolve, reject) {
-    Client.findOne({ _id: id}, (error, result) => {
+    Client.findOne({ _id: id }, (error, result) => {
       console.log(result);
       console.log(error)
-      if (error) { 
+      if (error) {
         reject(error);
         return;
       }
-      if(result)
-      resolve(result);
+      if (result)
+        resolve(result);
       else
-      resolve({message:"No such client found"})
+        resolve({ message: "No such client found" })
     })
-});
+  });
 }
 
 
@@ -122,17 +146,17 @@ exports.getclientById = function (id) {
  **/
 exports.loginclient = function (email, password) {
   return new Promise(function (resolve, reject) {
-    Client.findOne({ email: email, password: password },{password:0}, (error, client) => {
+    Client.findOne({ email: email, password: password }, { password: 0 }, (error, client) => {
       console.log(client);
       console.log(error)
       if (error) {
         reject(error);
         return;
       }
-      if(client)
-      resolve(client);
+      if (client)
+        resolve(client);
       else
-      resolve({message:"Invalid email or password"})
+        resolve({ message: "Invalid email or password" })
     })
 
   });
@@ -162,18 +186,20 @@ exports.loginclient = function (email, password) {
  **/
 exports.updateClient = function (id, body) {
   return new Promise(function (resolve, reject) {
-    Client.findOneAndUpdate({ _id: id},{$set:body},{new:true,password:0}, (error, client) => {
-        console.log(client);
-        console.log(error)
-        if (error) { 
-          reject(error);
-          return;
-        }
-        if(client)
+    body.updatedBy = body.userId;
+    body.updatedDate = Date.now();
+    Client.findOneAndUpdate({ _id: id }, { $set: body }, { new: true, password: 0 }, (error, client) => {
+      console.log(client);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (client)
         resolve(client);
-        else
-        resolve({message:"No such client found"})
-      })
+      else
+        resolve({ message: "No such client found" })
+    })
   });
 }
 

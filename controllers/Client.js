@@ -58,6 +58,19 @@ module.exports.getclientById = function getclientById (req, res, next) {
     });
 };
 
+module.exports.getClientList = function getClientList (req, res, next) {
+  var userId = req.swagger.params['userId'].value;
+  var page= req.swagger.params['page'].value;
+  var limit = req.swagger.params['limit'].value;
+  Client.getClientList(userId,page,limit)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
 module.exports.loginclient = function loginclient (req, res, next) {
   var username = req.swagger.params['username'].value;
   var password = req.swagger.params['password'].value;

@@ -4,15 +4,14 @@ mongoose.Promise = global.Promise;
 
 module.exports = mongoose.model('client', new Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     password:  {
         type: String
     },
     country:{
-        name: String,
-        geolocation: [Number],
-        phoneCode: String   
+        type: String,
     },
     email:  {
         type: String,
