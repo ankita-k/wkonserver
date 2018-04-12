@@ -14,10 +14,10 @@ exports.createProject = function (body) {
     
     data.save(function (err, result) {
       if (err) {
-          reject(err);
+          reject({error:true,message:err});
         return;
       }
-      resolve(result);
+      resolve({error:false,result:result});
     })
   });
 }

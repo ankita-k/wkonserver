@@ -133,7 +133,7 @@ exports.loginUser = function (email, password) {
         return;
       }
       if (user) {
-        resolve(user);
+        resolve({error:false, message:"User logged in successfully", result:user});
         user.lastLogin = Date.now();
         user.save().then(result => {
           console.log('lastLogin of ' + result.name + ' : ' + result.lastLogin)
@@ -197,14 +197,14 @@ exports.resetPassword = function (body) {
         result.password = body.newPassword
         result.save()
         .then(user => {
-          resolve(user);
+          resolve({error:false, result:user});
         }).catch(err => {
           reject(err);
         })
 
       }
       else
-        resolve({ message: "Wrong password" })
+        resolve({ error: true, message: "Wrong password" })
     })
   });
 }
