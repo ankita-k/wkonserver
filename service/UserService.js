@@ -188,6 +188,7 @@ exports.updateUser = function (id, body) {
 
 exports.resetPassword = function (body) {
   return new Promise(function (resolve, reject) {
+    console.log(body);
     User.findOne({ _id: body.id, password: body.password }, (error, result) => {
       if (error) {
         reject(error);
