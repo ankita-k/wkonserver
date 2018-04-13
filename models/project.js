@@ -33,7 +33,7 @@ module.exports = mongoose.model('project', new Schema({
     actualendDate:{
         type: Date
     },
-    memebers:[
+    members:[
         {
             userId: {
                 type: Schema.ObjectId,
