@@ -46,8 +46,8 @@ exports.createClient = function (body) {
 exports.getClientList = function (id, page, limit) {
   return new Promise(function (resolve, reject) {
     console.log("hello");
-    let perPage = limit ? limit : 10;
-    let pageCount = page ? page : 0;
+    let perPage = parseInt(limit) ? parseInt(limit) : 10;
+    let pageCount = parseInt(page) ? parseInt(page) : 0;
     console.log(id,pageCount,perPage);
     Client.find({ createdBy: id })
       .sort({ createdDate: -1 })
