@@ -44,9 +44,8 @@ exports.createClient = function (body) {
 }
 
 exports.getClientList = function (id, page, limit) {
-  console.log(id,page,limit)
   return new Promise(function (resolve, reject) {
-    
+    console.log("hello");
     let perPage = limit ? limit : 10;
     let pageCount = page ? pageCount : 0;
     console.log(id,pageCount,perPage);
