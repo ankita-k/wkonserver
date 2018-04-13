@@ -44,14 +44,18 @@ exports.createClient = function (body) {
 }
 
 exports.getClientList = function (id, page, limit) {
+  console.log(id,page,limit)
   return new Promise(function (resolve, reject) {
+    
     let perPage = limit ? limit : 10;
-    let pageCount = page ? pageCount : 0
+    let pageCount = page ? pageCount : 0;
+    console.log(id,pageCount,perPage);
     Client.find({ createdBy: id })
       .sort({ createdDate: -1 })
       .limit(perPage)
       .skip(perPage * pageCount)
       .then(clientList => {
+        console.log()
         resolve(clientList);
       }).catch(err => {
         reject(err);
