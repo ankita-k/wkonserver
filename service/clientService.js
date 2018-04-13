@@ -16,6 +16,7 @@ exports.createClient = function (body) {
       password: 'password',
       country: body.country,
       email: body.email,
+      domain:body.domain,
       phoneNumber: body.phoneNumber,
       status: body.status,
       createdBy: body.userId,
