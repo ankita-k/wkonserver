@@ -55,9 +55,9 @@ exports.getClientList = function (id, page, limit) {
       .skip(perPage * pageCount)
       .then(clientList => {
         console.log()
-        resolve(clientList);
+        resolve({error:false, result:clientList});
       }).catch(err => {
-        reject(err);
+        reject({error:true,message:err});
       })
   });
 }
