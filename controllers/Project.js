@@ -5,7 +5,7 @@ var Project = require('../service/projectService');
 
 module.exports.CreateProject = function CreateProject (req, res, next) {
   var body = req.swagger.params['body'].value;
-  Project.CreateProject(body)
+  Project.createProject(body)
     .then(function (response) {
       utils.writeJson(res, response);
     })

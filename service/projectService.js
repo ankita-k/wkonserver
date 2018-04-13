@@ -10,8 +10,23 @@ var project = require('../models/project');
  **/
 exports.createProject = function (body) {
   return new Promise(function (resolve, reject) {
-    var data = new project(body);
-    
+    var project = new Client({
+      name: body.name,
+      requirement: body.requirement,
+      status: body.status,
+      technology: body.technology,
+      expectedstartDate: body.expectedstartDate,
+      actualstartDate: body.actualstartDate,
+      expectedendDate: body.expectedendDate,
+      createdBy: body.userId,
+      updatedBy: body.userId,
+      client: body.client,
+      members:[
+        {
+          userId:body.userId,
+          role:'Owner'
+        }]
+    });
     data.save(function (err, result) {
       if (err) {
           reject({error:true,message:err});
@@ -22,6 +37,21 @@ exports.createProject = function (body) {
   });
 }
 
+exports.getProjectList = function (id, page, limit) {
+  return new Promise(function (resolve, reject) {
+    let perPage = parseInt(limit) ? parseInt(limit) : 10;
+    let pageCount = parseInt(page) ? parseInt(page) : 0;
+    project.find({ "members.userId": id })
+      .sort({ createdDate: -1 })
+      .limit(perPage)
+      .skip(perPage * pageCount)
+      .then(projectList => {
+        resolve({error:false, result:projectList});
+      }).catch(err => {
+        reject({error:true,message:err});
+      })
+  });
+}
 
 /**
  * Creates list of admin with given input array

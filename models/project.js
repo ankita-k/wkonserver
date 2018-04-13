@@ -4,29 +4,44 @@ mongoose.Promise = global.Promise;
 
 module.exports = mongoose.model('project', new Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     requirement:  {
         type: String
     },
     status:  {
-        type: String
+        type: String,
+        default: 'Pipeline'
     },
     technology:  {
         type: String
     },
     expectedstartDate:{
-        type: String
+        type: Date
     },
     actualstartDate:{
-        type: String
+        type: Date
+    },
+    client:{
+        type: Schema.ObjectId,
+        ref: 'Client'
     },
     expectedendDate:{
-        type: String
+        type: Date
     },
     actualendDate:{
-        type: String
+        type: Date
     },
+    memebers:[
+        {
+            userId: {
+                type: Schema.ObjectId,
+                ref: 'User'
+            },
+            role: String
+        }
+    ],
     createdBy:{
         type: Schema.ObjectId,
         ref: 'User'
