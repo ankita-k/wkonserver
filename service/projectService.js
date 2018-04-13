@@ -27,7 +27,7 @@ exports.createProject = function (body) {
           role:'Owner'
         }]
     });
-    data.save(function (err, result) {
+    project.save(function (err, result) {
       if (err) {
           reject({error:true,message:err});
         return;
