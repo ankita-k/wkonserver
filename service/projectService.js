@@ -10,7 +10,7 @@ var project = require('../models/project');
  **/
 exports.createProject = function (body) {
   return new Promise(function (resolve, reject) {
-    var project = new Client({
+    var project = new project({
       name: body.name,
       requirement: body.requirement,
       status: body.status,
