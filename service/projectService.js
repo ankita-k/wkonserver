@@ -10,7 +10,7 @@ var project = require('../models/project');
  **/
 exports.createProject = function (body) {
   return new Promise(function (resolve, reject) {
-    var project = new project({
+    var data = new project({
       name: body.name,
       requirement: body.requirement,
       status: body.status,
@@ -27,7 +27,8 @@ exports.createProject = function (body) {
           role:'Owner'
         }]
     });
-    project.save(function (err, result) {
+    console.log(data);
+    data.save(function (err, result) {
       if (err) {
           reject({error:true,message:err});
         return;
