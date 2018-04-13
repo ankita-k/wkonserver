@@ -10,6 +10,7 @@ var project = require('../models/project');
  **/
 exports.createProject = function (body) {
   return new Promise(function (resolve, reject) {
+    console.log(body);
     var data = new project({
       name: body.name,
       requirement: body.requirement,
