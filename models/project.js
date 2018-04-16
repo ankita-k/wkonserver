@@ -17,21 +17,21 @@ module.exports = mongoose.model('project', new Schema({
     technology:  {
         type: String
     },
-    expectedstartDate:{
-        type: String
+    expectedStartDate:{
+        type: Date
     },
-    actualstartDate:{
-        type: String
+    actualStartDate:{
+        type: Date
     },
     client:{
         type: Schema.ObjectId,
         ref: 'Client'
     },
-    expectedendDate:{
-        type: String
+    expectedEndDate:{
+        type: Date
     },
-    actualendDate:{
-        type: String
+    actualEndDate:{
+        type: Date
     },
     members:[
         {

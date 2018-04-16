@@ -16,9 +16,9 @@ exports.createProject = function (body) {
       requirement: body.requirement,
       status: body.status,
       technology: body.technology,
-      expectedstartDate: new Date(body.expectedstartDate),
-      actualstartDate: new Date(body.actualstartDate),
-      expectedendDate: new Date(body.expectedendDate),
+      expectedStartDate: body.expectedStartDate,
+      actualStartDate: body.actualStartDate,
+      expectedEndDate: body.expectedEndDate,
       // actualendDate:new Date(body.actualendDate),
       createdBy: body.userId,
       updatedBy: body.userId,
@@ -29,7 +29,7 @@ exports.createProject = function (body) {
           role:'Owner'
         }]
     });
-    console.log(data);
+    // console.log(data);
     data.save(function (err, result) {
       if (err) {
           reject({error:true,message:err});
