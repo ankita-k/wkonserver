@@ -16,12 +16,13 @@ exports.createClient = function (body) {
       password: 'password',
       country: body.country,
       email: body.email,
-      domain:body.domain,
+      domain: body.domain,
       phoneNumber: body.phoneNumber,
       status: body.status,
       createdBy: body.userId,
       updatedBy: body.userId
     });
+    console.log(client.domain);
     // client.createdBy;
     client.save(function (err, client) {
       if (err) {

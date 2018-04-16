@@ -2,6 +2,7 @@
 
 var utils = require('../utils/writer.js');
 var User = require('../service/UserService');
+var Project = require('../service/projectService');
 
 module.exports.createUser = function createUser (req, res, next) {
   var body = req.swagger.params['body'].value;
@@ -50,6 +51,17 @@ module.exports.deleteUser = function deleteUser (req, res, next) {
 module.exports.getUserById = function getUserById (req, res, next) {
   var id = req.swagger.params['id'].value;
   User.getUserById(id)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.userDashboardDetails = function userDashboardDetails (req, res, next) {
+  var id = req.swagger.params['id'].value;
+  Project.userDashboardDetails(id)
     .then(function (response) {
       utils.writeJson(res, response);
     })

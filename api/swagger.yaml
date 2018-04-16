@@ -3,7 +3,7 @@ info:
   description: This is a server for WKON
   version: 1.0.0
   title: WKON
-host: 'mitapi.memeinfotech.com:5088'
+host: 'localhost:5088'
 tags:
   - name: user
     description: Operations about user
@@ -194,57 +194,34 @@ paths:
         '404':
           description: User not found
       x-swagger-router-controller: User
-    put:
+  /user/dashboardDetails:
+    get:
       security:
         - key: []
       tags:
         - user
-      summary: Updated user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
+      summary: Get user by id
+      description: ''
+      operationId: userDashboardDetails
       produces:
         - application/xml
         - application/json
       parameters:
         - name: id
-          in: path
-          description: name that need to be updated
+          in: query
+          description: 'The name that needs to be fetched. Use user1 for testing. '
           required: true
           type: string
-        - in: body
-          name: body
-          description: Updated user object
-          required: true
-          schema:
-            $ref: '#/definitions/User'
       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Project'
         '400':
-          description: Invalid user supplied
+          description: Invalid user
         '404':
           description: User not found
       x-swagger-router-controller: User
-    delete:
-      security:
-        - key: []
-      tags:
-        - user
-      summary: Delete user
-      description: This can only be done by the logged in user.
-      operationId: deleteUser
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - name: id
-          in: path
-          description: The name that needs to be deleted
-          required: true
-          type: string
-      responses:
-        '400':
-          description: Invalid username supplied
-        '404':
-          description: User not found
   /client:
     post:
       security:
@@ -409,7 +386,7 @@ paths:
           description: Invalid client supplied
         '404':
           description: Client not found
-      x-swagger-router-controller: Client  
+      x-swagger-router-controller: Client
     delete:
       security:
         - key: []
@@ -431,7 +408,7 @@ paths:
         '400':
           description: Invalid username supplied
         '404':
-          description: Client not found  
+          description: Client not found
   /project:
     post:
       security:
@@ -576,7 +553,7 @@ paths:
         '400':
           description: Invalid project supplied
         '404':
-          description: Project not found        
+          description: Project not found
 definitions:
   User:
     type: object
@@ -608,17 +585,20 @@ definitions:
         type: string
       country:
         type: string
+      domain:
+        type: string
       phoneNumber:
         type: string
       status:
         type: string
-      userId: 
+      userId:
         type: string
     example:
       status: status
       country: country
       phoneNumber: phone
       email: email
+      domain: domain
       name: name
       userId: userId
     xml:
@@ -654,12 +634,11 @@ definitions:
       actualStartDate: actualStartDate
       expectedEndDate: expectedEndDate
       actualEndDate: actualEndDate
-      name: username
+      name: name
       client: client id
       userId: user id
     xml:
       name: Project
-      
   passwords:
     type: object
     properties:

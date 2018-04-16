@@ -1,6 +1,6 @@
 'use strict';
 var User = require('../models/user');
-
+var project = require('../models/project');
 
 /**
  * Create user
@@ -133,7 +133,7 @@ exports.loginUser = function (email, password) {
         return;
       }
       if (user) {
-        resolve({error:false, message:"User logged in successfully", result:user});
+        resolve({ error: false, message: "User logged in successfully", result: user });
         user.lastLogin = Date.now();
         user.save().then(result => {
           console.log('lastLogin of ' + result.name + ' : ' + result.lastLogin)
@@ -185,7 +185,8 @@ exports.updateUser = function (id, body) {
     })
   });
 }
-
+/*  api for reset password
+*/
 exports.resetPassword = function (body) {
   return new Promise(function (resolve, reject) {
     console.log(body);
@@ -197,11 +198,11 @@ exports.resetPassword = function (body) {
       if (result) {
         result.password = body.newPassword
         result.save()
-        .then(user => {
-          resolve({error:false, result:user});
-        }).catch(err => {
-          reject(err);
-        })
+          .then(user => {
+            resolve({ error: false, result: user });
+          }).catch(err => {
+            reject(err);
+          })
 
       }
       else
@@ -209,4 +210,36 @@ exports.resetPassword = function (body) {
     })
   });
 }
+
+/* Pi to get the user dashboard details
+*/
+exports.userDashboardDetails = function (id) {
+  return new Promise(function (resolve, reject) {
+    console.log(id);
+    project.findOne({ createdBy: id }, (error, result) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (result) {
+        console.log(result.length);
+        resolve({ error: false, result: result.length });
+        switch (result.status) {
+          case 'Pipeline':
+            resolve({ error: false, result: result.length });
+            break;
+          case 'Committed':
+            resolve({ error: false, result: result.length });
+            break;
+          case 'Interested':
+            resolve({ error: false, result: result.length });
+            break;
+        }
+      }
+      else
+        resolve({ error: true, message: "User is not in this project" })
+    })
+  });
+}
+
 

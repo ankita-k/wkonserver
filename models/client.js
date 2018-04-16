@@ -13,6 +13,9 @@ module.exports = mongoose.model('client', new Schema({
     country:{
         type: String,
     },
+    domain:{
+        type: String, 
+    },
     email:  {
         type: String,
         required: true,
