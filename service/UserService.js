@@ -24,7 +24,7 @@ exports.createUser = function (body) {
           reject({ "message": "This email already exists" })
         }
         else
-          reject(err);
+          reject({error:true,err});
 
         return;
       }
@@ -80,9 +80,9 @@ exports.deleteUser = function (username) {
         return;
       }
       if (user)
-        resolve(user);
+        resolve({error:false,result:user});
       else
-        resolve({ message: "User does not exist" })
+        resolve({ error:true,message: "User does not exist" })
     })
 
   });
@@ -106,9 +106,9 @@ exports.getUserById = function (id) {
         return;
       }
       if (user)
-        resolve(user);
+      resolve({error:false,result:user});
       else
-        resolve({ message: "User does not exist" })
+        resolve({error:true, message: "User does not exist" })
     })
 
   });
@@ -179,9 +179,9 @@ exports.updateUser = function (id, body) {
         return;
       }
       if (result)
-        resolve(result);
+       resolve({error:false,result:result});
       else
-        resolve({ message: "No such admin found" })
+        resolve({ error:true,message: "No such user found" })
     })
   });
 }

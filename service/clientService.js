@@ -105,9 +105,9 @@ exports.deleteclient = function (id) {
         return;
       }
       if (client)
-        resolve(client);
+      resolve({error:false, result:client});
       else
-        resolve({ message: "No such client found" })
+        resolve({ error:true,message: "No such client found" })
     })
   });
 }
@@ -130,9 +130,9 @@ exports.getclientById = function (id) {
         return;
       }
       if (result)
-        resolve(result);
+      resolve({error:false, result:result});
       else
-        resolve({ message: "No such client found" })
+        resolve({error:true, message: "No such client found" })
     })
   });
 }
@@ -156,9 +156,9 @@ exports.loginclient = function (email, password) {
         return;
       }
       if (client)
-        resolve(client);
+      resolve({error:false, result:result});
       else
-        resolve({ message: "Invalid email or password" })
+        resolve({error:true, message: "Invalid email or password" })
     })
 
   });
@@ -198,9 +198,9 @@ exports.updateClient = function (id, body) {
         return;
       }
       if (client)
-        resolve(client);
+      resolve({error:false, result:client});
       else
-        resolve({ message: "No such client found" })
+        resolve({error:true, message: "No such client found" })
     })
   });
 }

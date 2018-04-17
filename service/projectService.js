@@ -100,9 +100,9 @@ exports.deleteProject = function (id) {
           return;
         }
         if(result)
-        resolve(result);
+        resolve({error:false,result:result});
         else
-        resolve({message:"No such Project found"})
+        resolve({error:true,message:"No such Project found"})
       })
   });
 }
@@ -126,9 +126,9 @@ exports.getProjectById = function (adminId) {
           return;
         }
         if(result)
-        resolve(result);
+        resolve({error:false,result:result});
         else
-        resolve({message:"No such Project found"})
+        resolve({error:true,message:"No such Project found"})
       })
   });
 }
@@ -192,9 +192,9 @@ exports.updateProject = function (id, body) {
           return;
         }
         if(result)
-        resolve(result);
+        resolve({error:false,result:result});
         else
-        resolve({message:"No such project found"})
+        resolve({error:true,message:"No such project found"})
       })
   });
 }
