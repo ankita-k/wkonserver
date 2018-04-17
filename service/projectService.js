@@ -92,7 +92,7 @@ exports.getProjectList = function (id, page, limit) {
  **/
 exports.deleteProject = function (id) {
   return new Promise(function (resolve, reject) {
-    admin.findOneAndRemove({ _id: id}, (error, result) => {
+    project.findOneAndRemove({ _id: id}, (error, result) => {
         console.log(result);
         console.log(error)
         if (error) { 

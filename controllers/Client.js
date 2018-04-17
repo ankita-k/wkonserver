@@ -38,7 +38,7 @@ module.exports.createUsersWithListInput = function createUsersWithListInput (req
 
 module.exports.deleteclient = function deleteclient (req, res, next) {
   var _id = req.swagger.params['id'].value;
-  Client.deleteclient(id)
+  Client.deleteclient(_id)
     .then(function (response) {
       utils.writeJson(res, response);
     })

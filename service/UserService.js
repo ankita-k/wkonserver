@@ -28,7 +28,7 @@ exports.createUser = function (body) {
 
         return;
       }
-      resolve(user);
+      resolve({error:false,result:user});
     })
 
   });
@@ -216,30 +216,46 @@ exports.resetPassword = function (body) {
 exports.userDashboardDetails = function (id) {
   return new Promise(function (resolve, reject) {
     console.log(id);
-    project.findOne({ createdBy: id }, (error, result) => {
+    project.aggregate([
+      {
+        $match: { createdBy: id }
+      },
+      { $group: { _id: "status", count: { $sum: 1 } } }
+    ], (error, res) => {
+      console.log("res", res);
       if (error) {
-        reject(error);
+        reject(error)
         return;
       }
-      if (result) {
-        console.log(result.length);
-        resolve({ error: false, result: result.length });
-        switch (result.status) {
-          case 'Pipeline':
-            resolve({ error: false, result: result.length });
-            break;
-          case 'Committed':
-            resolve({ error: false, result: result.length });
-            break;
-          case 'Interested':
-            resolve({ error: false, result: result.length });
-            break;
+      else if (res) {
+        if (res.length == 0) {
+          resolve({ error: false, message: "Dashboard details" })
+          return;
         }
+        res.forEach((element, index, array) => {
+          console.log("element", element);
+          count++;
+          if (element._id == 'New')
+            resolve({ New :element.count })
+          else if (element._id == 'InDiscussion')
+            resolve({ InDiscussion :element.count });
+          else if (element._id == 'Scoping')
+            resolve({ Scoping : element.count });
+          else if (element._id == 'InProgess')
+            resolve({ InProgess : element.count });
+          else if (element._id == 'Stalled')
+            resolve({ Stalled : element.count });
+          else if (element._id == 'Completed')
+            resolve({ Completed : element.count });
+          if (count == array.length) {
+            resolve({ error: false, result: array.length, message: "Dashboard details" })
+          }
+        });
+
       }
-      else
-        resolve({ error: true, message: "User is not in this project" })
     })
   });
 }
+
 
 
