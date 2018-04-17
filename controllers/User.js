@@ -61,7 +61,7 @@ module.exports.getUserById = function getUserById (req, res, next) {
 
 module.exports.userDashboardDetails = function userDashboardDetails (req, res, next) {
   var id = req.swagger.params['id'].value;
-  Project.userDashboardDetails(id)
+  User.userDashboardDetails(id)
     .then(function (response) {
       utils.writeJson(res, response);
     })

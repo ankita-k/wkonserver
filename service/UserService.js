@@ -1,7 +1,7 @@
 'use strict';
 var User = require('../models/user');
 var project = require('../models/project');
-
+var ObjectID = require('mongodb').ObjectID;
 /**
  * Create user
  * This can only be done by the logged in user.
@@ -24,11 +24,11 @@ exports.createUser = function (body) {
           reject({ "message": "This email already exists" })
         }
         else
-          reject({error:true,err});
+          reject({ error: true, err });
 
         return;
       }
-      resolve({error:false,result:user});
+      resolve({ error: false, result: user });
     })
 
   });
@@ -80,9 +80,9 @@ exports.deleteUser = function (username) {
         return;
       }
       if (user)
-        resolve({error:false,result:user});
+        resolve({ error: false, result: user });
       else
-        resolve({ error:true,message: "User does not exist" })
+        resolve({ error: true, message: "User does not exist" })
     })
 
   });
@@ -106,9 +106,9 @@ exports.getUserById = function (id) {
         return;
       }
       if (user)
-      resolve({error:false,result:user});
+        resolve({ error: false, result: user });
       else
-        resolve({error:true, message: "User does not exist" })
+        resolve({ error: true, message: "User does not exist" })
     })
 
   });
@@ -179,9 +179,9 @@ exports.updateUser = function (id, body) {
         return;
       }
       if (result)
-       resolve({error:false,result:result});
+        resolve({ error: false, result: result });
       else
-        resolve({ error:true,message: "No such user found" })
+        resolve({ error: true, message: "No such user found" })
     })
   });
 }
@@ -211,18 +211,16 @@ exports.resetPassword = function (body) {
   });
 }
 
-/* Pi to get the user dashboard details
+/* Api to get the user dashboard details
 */
 exports.userDashboardDetails = function (id) {
   return new Promise(function (resolve, reject) {
-    console.log(id);
     project.aggregate([
       {
-        $match: { createdBy: id }
+        $match: { createdBy: ObjectID(id) }
       },
-      { $group: { _id: "status", count: { $sum: 1 } } }
+      { $group: { _id: '$status', count: { $sum: 1 } } }
     ], (error, res) => {
-      console.log("res", res);
       if (error) {
         reject(error)
         return;
@@ -232,23 +230,37 @@ exports.userDashboardDetails = function (id) {
           resolve({ error: false, message: "Dashboard details" })
           return;
         }
+        let count = 0;
+        let pipelineCount = 0;
+        let totalCount = 0;
+        let projectCounts=[];
         res.forEach((element, index, array) => {
-          console.log("element", element);
           count++;
-          if (element._id == 'New')
-            resolve({ New :element.count })
+          totalCount=totalCount+element.count;
+          if (element._id == 'New') {
+            pipelineCount = pipelineCount + element.count;
+            
+            // res.splice(index,1);
+          }
           else if (element._id == 'InDiscussion')
-            resolve({ InDiscussion :element.count });
+          {
+            pipelineCount = pipelineCount + element.count;
+            // res.splice(index,1);
+          }
           else if (element._id == 'Scoping')
-            resolve({ Scoping : element.count });
-          else if (element._id == 'InProgess')
-            resolve({ InProgess : element.count });
-          else if (element._id == 'Stalled')
-            resolve({ Stalled : element.count });
-          else if (element._id == 'Completed')
-            resolve({ Completed : element.count });
+          {
+            pipelineCount = pipelineCount + element.count;
+            // res.splice(index,1);
+          }
+          else{
+            projectCounts.push(element);
+          }
+          
           if (count == array.length) {
-            resolve({ error: false, result: array.length, message: "Dashboard details" })
+            projectCounts.push({_id:"Pipeline",count:pipelineCount});
+            projectCounts.push({_id:"Total",count:totalCount});
+            resolve({ error: false, result: projectCounts, message: "Dashboard details" })
+
           }
         });
 

@@ -23,19 +23,23 @@ exports.createProject = function (body) {
       createdBy: body.userId,
       updatedBy: body.userId,
       client: body.client,
-      members:[
+      members: [
         {
-          userId:body.userId,
-          role:'Owner'
+          userId: body.userId,
+          role: 'Owner'
         }]
     });
     // console.log(data);
     data.save(function (err, result) {
       if (err) {
-          reject({error:true,message:err});
+        reject({ error: true, message: err });
         return;
       }
-      resolve({error:false,result:result});
+      if (result) {
+        data.populate('client', function (err, res) {
+          resolve({ error: false, result: res });
+        });
+    }
     })
   });
 }
@@ -49,9 +53,9 @@ exports.getProjectList = function (id, page, limit) {
       .limit(perPage)
       .skip(perPage * pageCount)
       .then(projectList => {
-        resolve({error:false, result:projectList});
+        resolve({ error: false, result: projectList });
       }).catch(err => {
-        reject({error:true,message:err});
+        reject({ error: true, message: err });
       })
   });
 }
@@ -92,18 +96,18 @@ exports.getProjectList = function (id, page, limit) {
  **/
 exports.deleteProject = function (id) {
   return new Promise(function (resolve, reject) {
-    project.findOneAndRemove({ _id: id}, (error, result) => {
-        console.log(result);
-        console.log(error)
-        if (error) { 
-          reject(error);
-          return;
-        }
-        if(result)
-        resolve({error:false,result:result});
-        else
-        resolve({error:true,message:"No such Project found"})
-      })
+    project.findOneAndRemove({ _id: id }, (error, result) => {
+      console.log(result);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (result)
+        resolve({ error: false, result: result });
+      else
+        resolve({ error: true, message: "No such Project found" })
+    })
   });
 }
 
@@ -117,19 +121,19 @@ exports.deleteProject = function (id) {
  **/
 exports.getProjectById = function (adminId) {
   return new Promise(function (resolve, reject) {
-   
-    admin.findOne({ _id: id}, (error, result) => {
-        console.log(result);
-        console.log(error)
-        if (error) { 
-          reject(error);
-          return;
-        }
-        if(result)
-        resolve({error:false,result:result});
-        else
-        resolve({error:true,message:"No such Project found"})
-      })
+
+    admin.findOne({ _id: id }, (error, result) => {
+      console.log(result);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (result)
+        resolve({ error: false, result: result });
+      else
+        resolve({ error: true, message: "No such Project found" })
+    })
   });
 }
 
@@ -184,17 +188,17 @@ exports.getProjectById = function (adminId) {
  **/
 exports.updateProject = function (id, body) {
   return new Promise(function (resolve, reject) {
-    admin.findOneAndUpdate({ _id: id},{$set:body},{new:true,password:0}, (error, result) => {
-        console.log(result);
-        console.log(error)
-        if (error) { 
-          reject(error);
-          return;
-        }
-        if(result)
-        resolve({error:false,result:result});
-        else
-        resolve({error:true,message:"No such project found"})
-      })
+    admin.findOneAndUpdate({ _id: id }, { $set: body }, { new: true, password: 0 }, (error, result) => {
+      console.log(result);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (result)
+        resolve({ error: false, result: result });
+      else
+        resolve({ error: true, message: "No such project found" })
+    })
   });
 }
