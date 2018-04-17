@@ -35,11 +35,12 @@ exports.createProject = function (body) {
         reject({ error: true, message: err });
         return;
       }
-      if (result) {
-        data.populate('client', function (err, res) {
+      else if (result) {
+        console.log(result)
+       data.populate('client',function (err, res) {
           resolve({ error: false, result: res });
         });
-    }
+      }
     })
   });
 }

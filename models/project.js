@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 module.exports = mongoose.model('project', new Schema({
+
     name: {
         type: String,
         required: true
@@ -25,7 +26,7 @@ module.exports = mongoose.model('project', new Schema({
     },
     client:{
         type: Schema.ObjectId,
-        ref: 'Client'
+        ref: 'client'
     },
     expectedEndDate:{
         type: Date
@@ -62,5 +63,6 @@ module.exports = mongoose.model('project', new Schema({
         type: Number,
         default: 0
     }
-    
 }));
+
+
