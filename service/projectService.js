@@ -37,7 +37,7 @@ exports.createProject = function (body) {
       }
       else if (result) {
         console.log(result)
-       data.populate('client',function (err, res) {
+        data.populate('client', function (err, res) {
           resolve({ error: false, result: res });
         });
       }
@@ -50,6 +50,7 @@ exports.getProjectList = function (id, page, limit) {
     let perPage = parseInt(limit) ? parseInt(limit) : 10;
     let pageCount = parseInt(page) ? parseInt(page) : 0;
     project.find({ "members.userId": id })
+      .populate({path: 'client'})
       .sort({ createdDate: -1 })
       .limit(perPage)
       .skip(perPage * pageCount)
@@ -123,7 +124,7 @@ exports.deleteProject = function (id) {
 exports.getProjectById = function (adminId) {
   return new Promise(function (resolve, reject) {
 
-    admin.findOne({ _id: id }, (error, result) => {
+    project.findOne({_id: id }).populate({path: 'client'}).exec(function(error, result){
       console.log(result);
       console.log(error)
       if (error) {
@@ -189,7 +190,7 @@ exports.getProjectById = function (adminId) {
  **/
 exports.updateProject = function (id, body) {
   return new Promise(function (resolve, reject) {
-    admin.findOneAndUpdate({ _id: id }, { $set: body }, { new: true, password: 0 }, (error, result) => {
+    project.findOneAndUpdate({ _id: id }, { $set: body }, { new: true, password: 0 }).populate({path: 'client'}).exec(function (error, result){
       console.log(result);
       console.log(error)
       if (error) {
