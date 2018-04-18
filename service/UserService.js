@@ -216,7 +216,7 @@ exports.resetPassword = function (body) {
 exports.findByRole = function (role) {
   return new Promise(function (resolve, reject) {
     console.log(role);
-    User.findOne({ role: role }, (error, result) => {
+    User.find({ role: role }, (error, result) => {
       if (error) {
         reject(error);
         return;
