@@ -2,6 +2,7 @@
 var User = require('../models/user');
 var project = require('../models/project');
 var ObjectID = require('mongodb').ObjectID;
+var client = require('../models/client');
 /**
  * Create user
  * This can only be done by the logged in user.
@@ -211,7 +212,25 @@ exports.resetPassword = function (body) {
   });
 }
 
-/* Api to get the user dashboard details
+/*api to get the user whose role is developer*/
+exports.findByRole = function (role) {
+  return new Promise(function (resolve, reject) {
+    console.log(role);
+    User.findOne({ role: role }, (error, result) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (result) {
+        resolve({ error: false, result: result });
+      }
+        else
+        resolve({ error: true, message: "No such user found" })
+      })
+  });
+}
+
+/* Api to get the user dashboard details by user id
 */
 exports.userDashboardDetails = function (id) {
   return new Promise(function (resolve, reject) {
@@ -233,32 +252,31 @@ exports.userDashboardDetails = function (id) {
         let count = 0;
         let pipelineCount = 0;
         let totalCount = 0;
-        let projectCounts=[];
+        let projectCounts = {};
         res.forEach((element, index, array) => {
           count++;
-          totalCount=totalCount+element.count;
+          totalCount = totalCount + element.count;
           if (element._id == 'New') {
             pipelineCount = pipelineCount + element.count;
-            
+
             // res.splice(index,1);
           }
-          else if (element._id == 'InDiscussion')
-          {
+          else if (element._id == 'InDiscussion') {
             pipelineCount = pipelineCount + element.count;
             // res.splice(index,1);
           }
-          else if (element._id == 'Scoping')
-          {
+          else if (element._id == 'Scoping') {
             pipelineCount = pipelineCount + element.count;
             // res.splice(index,1);
           }
-          else{
-            projectCounts.push(element);
+          else {
+            projectCounts[element._id] = element.count;
+            console.log(projectCounts);
           }
-          
+
           if (count == array.length) {
-            projectCounts.push({_id:"Pipeline",count:pipelineCount});
-            projectCounts.push({_id:"Total",count:totalCount});
+            projectCounts["Pipeline"] = pipelineCount;
+            projectCounts["Total"] = totalCount;
             resolve({ error: false, result: projectCounts, message: "Dashboard details" })
 
           }
@@ -269,5 +287,58 @@ exports.userDashboardDetails = function (id) {
   });
 }
 
+/* Api to get the user dashboard details by client id
+*/
+exports.clientDashboardDetails = function (id) {
+  return new Promise(function (resolve, reject) {
+    client.aggregate([
+      {
+        $match: { createdBy: ObjectID(id) }
+      },
+      { $group: { _id: '$status', count: { $sum: 1 } } }
+    ], (error, res) => {
+      if (error) {
+        reject(error)
+        return;
+      }
+      else if (res) {
+        if (res.length == 0) {
+          resolve({ error: false, message: "Dashboard details" })
+          return;
+        }
+        let count = 0;
+        let pipelineCount = 0;
+        let totalCount = 0;
+        let projectCounts = {};
+        res.forEach((element, index, array) => {
+          count++;
+          totalCount = totalCount + element.count;
+          if (element._id == 'Pipeline') {
+            pipelineCount = pipelineCount + element.count;
+          }
+          else if (element._id == 'Commiitted') {
+            pipelineCount = pipelineCount + element.count;
 
+          }
+          else if (element._id == 'Interested') {
+            pipelineCount = pipelineCount + element.count;
+
+          }
+          else {
+            projectCounts[element._id] = element.count;
+            console.log(projectCounts);
+          }
+
+          if (count == array.length) {
+            projectCounts["Pipeline"] = pipelineCount;
+            projectCounts["Total"] = totalCount;
+            resolve({ error: false, result: projectCounts, message: "Dashboard details" })
+
+          }
+        });
+
+      }
+    })
+  });
+}
 

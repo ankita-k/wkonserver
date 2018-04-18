@@ -2,7 +2,7 @@
 
 var utils = require('../utils/writer.js');
 var User = require('../service/UserService');
-var Project = require('../service/projectService');
+
 
 module.exports.createUser = function createUser (req, res, next) {
   var body = req.swagger.params['body'].value;
@@ -59,9 +59,32 @@ module.exports.getUserById = function getUserById (req, res, next) {
     });
 };
 
+module.exports.findByRole = function findByRole (req, res, next) {
+  var id = req.swagger.params['role'].value;
+  User.findByRole(id)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
 module.exports.userDashboardDetails = function userDashboardDetails (req, res, next) {
   var id = req.swagger.params['id'].value;
   User.userDashboardDetails(id)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.clientDashboardDetails = function clientDashboardDetails (req, res, next) {
+  var id = req.swagger.params['id'].value;
+  User.clientDashboardDetails(id)
     .then(function (response) {
       utils.writeJson(res, response);
     })
