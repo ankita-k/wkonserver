@@ -410,16 +410,6 @@ paths:
           description: The user id of logged in user
           required: true
           type: string
-        - name: page
-          in: query
-          description: The page number
-          required: true
-          type: string
-        - name: limit
-          in: query
-          description: The limit of documents
-          required: true
-          type: string
       responses:
         '200':
           description: successful operation
