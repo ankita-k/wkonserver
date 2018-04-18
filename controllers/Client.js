@@ -60,9 +60,9 @@ module.exports.getclientById = function getclientById (req, res, next) {
 
 module.exports.getClientList = function getClientList (req, res, next) {
   var userId = req.swagger.params['userId'].value;
-  var page= req.swagger.params['page'].value;
-  var limit = req.swagger.params['limit'].value;
-  Client.getClientList(userId,page,limit)
+  // var page= req.swagger.params['page'].value;
+  // var limit = req.swagger.params['limit'].value;
+  Client.getClientList(userId)
     .then(function (response) {
       utils.writeJson(res, response);
     })

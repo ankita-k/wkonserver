@@ -45,14 +45,14 @@ exports.createClient = function (body) {
   });
 }
 
-exports.getClientList = function (id, page, limit) {
+exports.getClientList = function (id) {
   return new Promise(function (resolve, reject) {
-    let perPage = parseInt(limit) ? parseInt(limit) : 10;
-    let pageCount = parseInt(page) ? parseInt(page) : 0;
+    // let perPage = parseInt(limit) ? parseInt(limit) : 10;
+    // let pageCount = parseInt(page) ? parseInt(page) : 0;
     Client.find({ createdBy: id })
       .sort({ createdDate: -1 })
-      .limit(perPage)
-      .skip(perPage * pageCount)
+      // .limit(perPage)
+      // .skip(perPage * pageCount)
       .then(clientList => {
         resolve({error:false, result:clientList});
       }).catch(err => {
