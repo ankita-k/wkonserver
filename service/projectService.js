@@ -45,15 +45,15 @@ exports.createProject = function (body) {
   });
 }
 
-exports.getProjectList = function (id, page, limit) {
+exports.getProjectList = function (id) {
   return new Promise(function (resolve, reject) {
-    let perPage = parseInt(limit) ? parseInt(limit) : 10;
-    let pageCount = parseInt(page) ? parseInt(page) : 0;
+    // let perPage = parseInt(limit) ? parseInt(limit) : 10;
+    // let pageCount = parseInt(page) ? parseInt(page) : 0;
     project.find({ "members.userId": id })
       .populate({path: 'client'})
       .sort({ createdDate: -1 })
-      .limit(perPage)
-      .skip(perPage * pageCount)
+      // .limit(perPage)
+      // .skip(perPage * pageCount)
       .then(projectList => {
         resolve({ error: false, result: projectList });
       }).catch(err => {

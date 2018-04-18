@@ -16,9 +16,9 @@ module.exports.CreateProject = function CreateProject (req, res, next) {
 
 module.exports.getProjectList = function getProjectList (req, res, next) {
   var userId = req.swagger.params['userId'].value;
-  var page= req.swagger.params['page'].value;
-  var limit = req.swagger.params['limit'].value;
-  Project.getProjectList(userId,page,limit)
+  // var page= req.swagger.params['page'].value;
+  // var limit = req.swagger.params['limit'].value;
+  Project.getProjectList(userId)
     .then(function (response) {
       utils.writeJson(res, response);
     })
