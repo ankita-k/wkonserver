@@ -121,7 +121,7 @@ exports.deleteProject = function (id) {
  * project id String The id that needs to be fetched. Use admin for testing. 
  * returns project
  **/
-exports.getProjectById = function (adminId) {
+exports.getProjectById = function (id) {
   return new Promise(function (resolve, reject) {
 
     project.findOne({_id: id }).populate({path: 'client'}).exec(function(error, result){
