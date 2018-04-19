@@ -51,7 +51,7 @@ exports.getProjectList = function (id) {
     // let pageCount = parseInt(page) ? parseInt(page) : 0;
     project.find({ "members.userId": id })
       .populate({path: 'client'})
-      .sort({createdDate: 'descending' })
+      .sort({"createdDate": -1 })
       // .limit(perPage)
       // .skip(perPage * pageCount)
       .then(projectList => {
@@ -190,7 +190,7 @@ exports.getProjectById = function (adminId) {
  **/
 exports.updateProject = function (id, body) {
   return new Promise(function (resolve, reject) {
-    project.findOneAndUpdate({ _id: id }, { $set: body }, { new: true, password: 0 }).populate({path: 'client'}).exec(function (error, result){
+    project.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }).populate({path: 'client'}).exec(function (error, result){
       console.log(result);
       console.log(error)
       if (error) {

@@ -53,11 +53,11 @@ module.exports = mongoose.model('project', new Schema({
     },
     createdDate:{
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     updatedDate:{
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     enable:{
         type: Number,

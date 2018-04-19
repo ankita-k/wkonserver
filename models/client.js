@@ -38,11 +38,11 @@ module.exports = mongoose.model('client', new Schema({
     },
     createdDate:{
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     updatedDate:{
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     enable:{
         type: Number,

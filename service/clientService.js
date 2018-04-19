@@ -50,7 +50,7 @@ exports.getClientList = function (id) {
     // let perPage = parseInt(limit) ? parseInt(limit) : 10;
     // let pageCount = parseInt(page) ? parseInt(page) : 0;
     Client.find({ createdBy: id })
-      .sort({createdDate: 'descending' })
+      .sort({"createdDate": -1 })
       // .limit(perPage)
       // .skip(perPage * pageCount)
       .then(clientList => {
