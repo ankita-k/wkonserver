@@ -224,9 +224,9 @@ exports.findByRole = function (role) {
       if (result) {
         resolve({ error: false, result: result });
       }
-        else
+      else
         resolve({ error: true, message: "No such user found" })
-      })
+    })
   });
 }
 
@@ -283,6 +283,9 @@ exports.userDashboardDetails = function (id) {
         });
 
       }
+      else {
+        resolve({ error: true, message: "There is no project with any user" })
+      }
     })
   });
 }
@@ -336,8 +339,10 @@ exports.clientDashboardDetails = function (id) {
 
           }
         });
-
       }
+      else{
+        resolve({ error: true, message: "There is no project with any user" })
+      } 
     })
   });
 }

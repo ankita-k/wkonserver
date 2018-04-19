@@ -656,13 +656,14 @@ definitions:
       manager:
         type: string
       role:
-        type: string
+        type: string    
     example:
       password: password
       role: role
       phone: phone
       email: email
       name: username
+      manager: manager
     xml:
       name: User
   Client:
