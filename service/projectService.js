@@ -51,7 +51,7 @@ exports.getProjectList = function (id) {
     // let pageCount = parseInt(page) ? parseInt(page) : 0;
     project.find({ "members.userId": id })
       .populate({path: 'client'})
-      .sort({ createdDate: 1 })
+      .sort({ createdDate: -1 })
       // .limit(perPage)
       // .skip(perPage * pageCount)
       .then(projectList => {
