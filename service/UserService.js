@@ -115,6 +115,31 @@ exports.getUserById = function (id) {
   });
 }
 
+/**
+ * Get all user
+ * 
+ *
+ * username String The name that needs to be fetched. Use user1 for testing. 
+ * returns User
+ **/
+exports.getAllUser = function () {
+  return new Promise(function (resolve, reject) {
+    User.find({}, (error, user) => {
+      console.log(user);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (user)
+        resolve({ error: false, result: user });
+      else
+        resolve({ error: true, message: "User does not exist" })
+    })
+
+  });
+}
+
 
 /**
  * Logs user into the system

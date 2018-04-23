@@ -59,6 +59,16 @@ module.exports.getUserById = function getUserById (req, res, next) {
     });
 };
 
+module.exports.getAllUser = function getAllUser (req, res, next) {
+  User.getAllUser()
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
 module.exports.findByRole = function findByRole (req, res, next) {
   var id = req.swagger.params['role'].value;
   User.findByRole(id)
