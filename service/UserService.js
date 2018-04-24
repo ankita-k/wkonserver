@@ -3,6 +3,7 @@ var User = require('../models/user');
 var project = require('../models/project');
 var ObjectID = require('mongodb').ObjectID;
 var client = require('../models/client');
+
 /**
  * Create user
  * This can only be done by the logged in user.
@@ -71,9 +72,9 @@ exports.createUsersWithArrayInput = function (body) {
  * username String The name that needs to be deleted
  * no response value expected for this operation
  **/
-exports.deleteUser = function (username) {
+exports.deleteUser = function (id) {
   return new Promise(function (resolve, reject) {
-    User.findOneAndRemove({ _id: id }, (error, user) => {
+    User.findOneAndRemove({ _id: id } ,(error, user) => {
       console.log(user);
       console.log(error)
       if (error) {

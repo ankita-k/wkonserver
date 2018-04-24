@@ -32,20 +32,20 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
 
-  app.use(middleware.swaggerSecurity({
-    key: function(req, def, scopes, callback) {
-      console.log(req.headers['x-api-key']);
-      // var key = cryptr.decrypt(req.headers['x-api-key']);
-      //       console.log(key);
+  // app.use(middleware.swaggerSecurity({
+  //   key: function(req, def, scopes, callback) {
+  //     console.log(req.headers['x-api-key']);
+  //     // var key = cryptr.decrypt(req.headers['x-api-key']);
+  //     //       console.log(key);
 
-      if (req.headers['x-api-key'] == 'GF8SEmj3T/3YrtHqnjPEjZS11fyk2fLrp10T8bdmpbk=')
-      callback();
-      else
-      {
-       callback (new Error({message:"Unautharized access"}))
-      }
-    }
-  }));
+  //     if (req.headers['x-api-key'] == 'GF8SEmj3T/3YrtHqnjPEjZS11fyk2fLrp10T8bdmpbk=')
+  //     callback();
+  //     else
+  //     {
+  //      callback (new Error({message:"Unautharized access"}))
+  //     }
+  //   }
+  // }));
 
   // Validate Swagger requests
   app.use(middleware.swaggerValidator());

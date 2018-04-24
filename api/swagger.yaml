@@ -223,6 +223,7 @@ paths:
         '404':
           description: User not found
       x-swagger-router-controller: User
+  /user/delete:    
     delete:
       security:
         - key: []
@@ -236,7 +237,7 @@ paths:
         - application/json
       parameters:
         - name: id
-          in: path
+          in: query
           description: The name that needs to be deleted
           required: true
           type: string
@@ -245,6 +246,7 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
+      x-swagger-router-controller: User   
   /user/getAllUser:
     get:
       security:

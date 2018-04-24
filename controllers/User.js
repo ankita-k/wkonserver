@@ -38,7 +38,7 @@ module.exports.createUsersWithListInput = function createUsersWithListInput (req
 };
 
 module.exports.deleteUser = function deleteUser (req, res, next) {
-  var _id = req.swagger.params['_id'].value;
+  var _id = req.swagger.params['id'].value;
   User.deleteUser(_id)
     .then(function (response) {
       utils.writeJson(res, response);
