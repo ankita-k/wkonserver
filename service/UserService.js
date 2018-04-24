@@ -99,7 +99,7 @@ exports.deleteUser = function (username) {
  **/
 exports.getUserById = function (id) {
   return new Promise(function (resolve, reject) {
-    User.findOne({ _id: id }, (error, user) => {
+    User.findOne({ _id: id }).populate({path: 'manager'}).exec(function(error, user) {
       console.log(user);
       console.log(error)
       if (error) {
@@ -124,7 +124,7 @@ exports.getUserById = function (id) {
  **/
 exports.getAllUser = function () {
   return new Promise(function (resolve, reject) {
-    User.find({}, (error, user) => {
+    User.find({}).populate({path: 'manager'}).exec(function(error, user){
       console.log(user);
       console.log(error)
       if (error) {

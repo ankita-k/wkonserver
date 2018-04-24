@@ -25,15 +25,15 @@ module.exports = mongoose.model('user', new Schema({
     },
     manager :{
         type: Schema.ObjectId,
-        ref: 'User'
+        ref: 'user'
     },
     createdBy:{
         type: Schema.ObjectId,
-        ref: 'User'
+        ref: 'user'
     },
     updatedBy:{
         type: Schema.ObjectId,
-        ref: 'User'
+        ref: 'user'
     },
     createdDate:{
         type: Date,
