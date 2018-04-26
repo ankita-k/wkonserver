@@ -152,7 +152,7 @@ exports.getAllUser = function () {
  **/
 exports.loginUser = function (email, password) {
   return new Promise(function (resolve, reject) {
-    User.findOneAndUpdate({ email: email, password: password }, { password: 0 }, (error, user) => {
+    User.findOneAndUpdate({ email: email, password: password }, (error, user) => {
       console.log(user);
       console.log(error)
       if (error) {
