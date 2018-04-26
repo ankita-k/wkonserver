@@ -152,7 +152,7 @@ exports.getAllUser = function () {
  **/
 exports.loginUser = function (email, password) {
   return new Promise(function (resolve, reject) {
-    User.findOneAndUpdate({ email: email, password: password }, (error, user) => {
+    User.findOneAndUpdate({ email: email, password: password },{$set:{lastLogin : Date.now()}} ,(error, user) => {
       console.log(user);
       console.log(error)
       if (error) {
@@ -160,7 +160,6 @@ exports.loginUser = function (email, password) {
         return;
       }
       else if (user) {
-        user.lastLogin = Date.now();
         resolve({ error: false, message: "User logged in successfully", result: user });
       }
       else
