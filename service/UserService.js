@@ -152,20 +152,16 @@ exports.getAllUser = function () {
  **/
 exports.loginUser = function (email, password) {
   return new Promise(function (resolve, reject) {
-    User.findOne({ email: email, password: password }, { password: 0 }, (error, user) => {
+    User.findOneAndUpdate({ email: email, password: password }, { password: 0 }, (error, user) => {
       console.log(user);
       console.log(error)
       if (error) {
         reject(error);
         return;
       }
-      if (user) {
-        resolve({ error: false, message: "User logged in successfully", result: user });
+      else if (user) {
         user.lastLogin = Date.now();
-        user.save().then(result => {
-          console.log('lastLogin of ' + result.name + ' : ' + result.lastLogin)
-        })
-
+        resolve({ error: false, message: "User logged in successfully", result: user });
       }
       else
         resolve({ error: true, message: "Invalid email or password" })
