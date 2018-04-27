@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 module.exports = mongoose.model('bill', new Schema({
     billingDate: {
-        type: String
+        type: Date
     },
     paypalBillNumber: {
         type: String
@@ -49,9 +49,29 @@ module.exports = mongoose.model('bill', new Schema({
         type: String
     },
     receivedDate: {
-        type: String
+        type: Date
     },
     status: {
         type: String
+    },
+    createdBy:{
+        type: Schema.ObjectId,
+        ref: 'User'
+    },
+    updatedBy:{
+        type: Schema.ObjectId,
+        ref: 'User'
+    },
+    createdDate:{
+        type: Date,
+        default: Date.now
+    },
+    updatedDate:{
+        type: Date,
+        default: Date.now
+    },
+    enable:{
+        type: Number,
+        default: 0
     }
 }));
