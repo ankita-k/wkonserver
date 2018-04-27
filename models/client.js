@@ -16,6 +16,18 @@ module.exports = mongoose.model('client', new Schema({
     domain:{
         type: String, 
     },
+    address:{
+        type: String,         
+    },
+    company:{
+        type: String,                 
+    },
+    paypalId:{
+        type: String,                 
+    },
+    currency:{
+        type: String,                 
+    },
     email:  {
         type: String,
         required: true,

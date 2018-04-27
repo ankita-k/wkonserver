@@ -19,6 +19,10 @@ exports.createClient = function (body) {
       domain: body.domain,
       phoneNumber: body.phoneNumber,
       status: body.status,
+      address: body.status,
+      company: body.company,
+      paypalId: body.paypalId,
+      currency: body.currency,
       createdBy: body.userId,
       updatedBy: body.userId
     });
@@ -28,18 +32,18 @@ exports.createClient = function (body) {
       if (err) {
         if (err.errors && err.errors.email)  // error check if email is not present
         {
-          reject({error: true, "message": "Email is required to create a client" })
+          reject({ error: true, "message": "Email is required to create a client" })
         }
         else if (err.code == 11000) // error check if email is not unique
         {
-          reject({error: true, "message": "This email already exists" })
+          reject({ error: true, "message": "This email already exists" })
         }
         else
-          reject({error:true,message:err});
+          reject({ error: true, message: err });
 
         return;
       }
-      resolve({error:false,result:client});
+      resolve({ error: false, result: client });
     })
 
   });
@@ -50,13 +54,13 @@ exports.getClientList = function (id) {
     // let perPage = parseInt(limit) ? parseInt(limit) : 10;
     // let pageCount = parseInt(page) ? parseInt(page) : 0;
     Client.find({ createdBy: id })
-      .sort({"createdDate": -1 })
+      .sort({ "createdDate": -1 })
       // .limit(perPage)
       // .skip(perPage * pageCount)
       .then(clientList => {
-        resolve({error:false, result:clientList});
+        resolve({ error: false, result: clientList });
       }).catch(err => {
-        reject({error:true,message:err});
+        reject({ error: true, message: err });
       })
   });
 }
@@ -105,9 +109,9 @@ exports.deleteclient = function (id) {
         return;
       }
       if (client)
-      resolve({error:false, result:client});
+        resolve({ error: false, result: client });
       else
-        resolve({ error:true,message: "No such client found" })
+        resolve({ error: true, message: "No such client found" })
     })
   });
 }
@@ -130,9 +134,9 @@ exports.getclientById = function (id) {
         return;
       }
       if (result)
-      resolve({error:false, result:result});
+        resolve({ error: false, result: result });
       else
-        resolve({error:true, message: "No such client found" })
+        resolve({ error: true, message: "No such client found" })
     })
   });
 }
@@ -156,9 +160,9 @@ exports.loginclient = function (email, password) {
         return;
       }
       if (client)
-      resolve({error:false, result:result});
+        resolve({ error: false, result: result });
       else
-        resolve({error:true, message: "Invalid email or password" })
+        resolve({ error: true, message: "Invalid email or password" })
     })
 
   });
@@ -198,9 +202,9 @@ exports.updateClient = function (id, body) {
         return;
       }
       if (client)
-      resolve({error:false, result:client});
+        resolve({ error: false, result: client });
       else
-        resolve({error:true, message: "No such client found" })
+        resolve({ error: true, message: "No such client found" })
     })
   });
 }
