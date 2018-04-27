@@ -666,7 +666,75 @@ paths:
           description: Invalid project supplied
         '404':
           description: Project not found
-      x-swagger-router-controller: Project    
+      x-swagger-router-controller: Project
+  /bill:
+    post:
+      security:
+        - key: []
+      tags:
+        - bill
+      summary: Create bill
+      description: This enables a user to cretae a bill for a project.
+      operationId: createBill
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created bill object
+          required: true
+          schema:
+            $ref: '#/definitions/Bill'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: Bill
+    get:
+      security:
+        - key: []
+      tags:
+        - bill
+      summary: Get List of bills raised by user
+      description: This enables a user to list all bills craeted by the user.
+      operationId: getBill
+      parameters:
+        - in: query
+          name: userId
+          description: user id of logged in user
+          required: true
+          type: string
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: Bill
+    put:
+      security:
+        - key: []
+      tags:
+        - bill
+      summary: Update bill
+      description: This enables a user to update a bill for a project.
+      operationId: updateBill
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: id of bill that needs to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated bill object
+          required: true
+          schema:
+            $ref: '#/definitions/Bill'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: Bill
 definitions:
   User:
     type: object
@@ -765,6 +833,63 @@ definitions:
       userId: user id
     xml:
       name: Project
+  Bill:
+    type: object
+    properties:
+      userId:
+        type: string
+      billingDate: 
+        type: string
+      paypalBillNumber:
+        type: string
+      billNumber:
+        type: string
+      BDE: 
+        type: string
+      type: 
+        type: string
+      client:
+        type: string
+      company:
+        type: string
+      paypalAccountName:
+        type: string 
+      email:
+        type: string
+      projectName:
+        type: string
+      projectCost:
+        type: number
+      receivedAmount:
+        type: number
+      balance:
+        type: number
+      currency:
+        type: string
+      receivedDate:
+        type: string
+      status:
+        type: string
+    example:
+      userId: "user id of logged in user"
+      billingDate: "Date"
+      paypalBillNumber: "paypal bill number"
+      billNumber: "bill number"
+      BDE: "id of the sales person"
+      type: "type"
+      client: "id of the client"
+      company: "company of client"
+      paypalAccountName: "paypal account name"
+      email: "client email"
+      projectName: "project"
+      projectCost: 2000
+      receivedAmount: 500
+      balance: 1500
+      currency: USD
+      receivedDate: "Date when the credit is received"
+      status: "status of the bill"
+    xml:
+      name: bill
   passwords:
     type: object
     properties:
