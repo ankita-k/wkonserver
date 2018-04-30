@@ -720,13 +720,8 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - name: id
-          in: query
-          description: id of bill that needs to be updated
-          required: true
-          type: string
-        - in: body
-          name: body
+        - name: body
+          in: body
           description: Updated bill object
           required: true
           schema:

@@ -90,12 +90,12 @@ exports.deleteBill = function (id) {
  * body client Updated client object
  * no response value expected for this operation
  **/
-exports.updateBill = function (id, body) {
+exports.updateBill = function (body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.userId;
         body.updatedDate = Date.now();
-        Bill.findOneAndUpdate({ _id: id }, { $set: body }, { new: true, password: 0 }, (error, client) => {
-            console.log(client);
+        Bill.findOneAndUpdate({ _id: body.id }, { $set: body }, { new: true, password: 0 }, (error, bill) => {
+            console.log(bill);
             console.log(error)
             if (error) {
                 reject(error);
