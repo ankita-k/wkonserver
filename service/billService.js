@@ -45,7 +45,7 @@ exports.getBill = function (id) {
             .sort({ "createdDate": -1 })
             .populate('projectName')
             .populate('client')
-            .exec(function (err, story) {
+            .exec(function (err, bills) {
                 if (err) {
                     reject({ error: true, message: err });
                 }
@@ -78,9 +78,6 @@ exports.deleteBill = function (id) {
         })
     });
 }
-
-
-
 
 /**
  * Updated client
