@@ -816,6 +816,7 @@ definitions:
       role: role
       phone: phone
       email: email
+      tags: tags
       name: username
       manager: manager
     xml:
