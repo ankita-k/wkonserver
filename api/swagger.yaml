@@ -613,7 +613,7 @@ paths:
               format: date-time
               description: date in UTC when token expires
       x-swagger-router-controller: Project
-  /user/addmember:
+  /project/addmember:
     put:
       security:
         - key: []
@@ -641,7 +641,8 @@ paths:
         '400':
           description: Invalid user supplied
         '404':
-          description: project not found    
+          description: project not found 
+      x-swagger-router-controller: Project       
   '/project/{id}':
     get:
       security:
