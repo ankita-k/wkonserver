@@ -72,7 +72,6 @@ module.exports.getUserTags = function getUserTags (req, res, next) {
 };
 
 
-
 module.exports.getAllUser = function getAllUser (req, res, next) {
   User.getAllUser()
     .then(function (response) {

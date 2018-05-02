@@ -613,6 +613,35 @@ paths:
               format: date-time
               description: date in UTC when token expires
       x-swagger-router-controller: Project
+  /user/addmember:
+    put:
+      security:
+        - key: []
+      tags:
+        - project
+      summary: Updated project
+      description: This can only be done by the logged in user.
+      operationId: updateProjectByMembers
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: project not found    
   '/project/{id}':
     get:
       security:

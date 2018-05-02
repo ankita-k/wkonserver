@@ -43,7 +43,8 @@ module.exports.getBill = function getBill (req, res, next) {
 
 module.exports.updateBill = function updateBill (req, res, next) {
   var body = req.swagger.params['body'].value;
-  Bill.updateBill(body)
+  var id = req.swagger.params['id'].value;
+  Bill.updateBill(id,body)
     .then(function (response) {
       utils.writeJson(res, response);
     })

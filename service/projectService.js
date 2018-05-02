@@ -204,3 +204,36 @@ exports.updateProject = function (id, body) {
     })
   });
 }
+
+/* Api to update members for the project
+*/
+exports.updateProjectByMembers = function (id, body) {
+  return new Promise(function (resolve, reject) {
+    project.findOneAndUpdate({ _id: id },{ $push: { members: { userId: body.userId} } }, { new: true }).populate({path: 'client'}).exec(function (error, result){
+      console.log(result);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (result)
+        resolve({ error: false, result: result });
+      else
+        resolve({ error: true, message: "No such project found" })
+    })
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -87,18 +87,18 @@ exports.deleteBill = function (id) {
  * body client Updated client object
  * no response value expected for this operation
  **/
-exports.updateBill = function (body) {
+exports.updateBill = function (id,body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.userId;
         body.updatedDate = Date.now();
-        Bill.findOneAndUpdate({ _id: body.id }, { $set: body }, { new: true, password: 0 }, (error, bill) => {
+        Bill.findOneAndUpdate({ _id: id }, { $set: body }, { new: true, password: 0 }, (error, bill) => {
             console.log(bill);
             console.log(error)
             if (error) {
                 reject(error);
                 return;
             }
-            if (bill)
+            else if (bill)
                 resolve({ error: false, result: bill });
             else
                 resolve({ error: true, message: "No such bill found" })

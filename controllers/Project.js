@@ -104,3 +104,17 @@ module.exports.updateProject = function updateProject (req, res, next) {
       utils.writeJson(res, response);
     });
 };
+
+module.exports.updateProjectByMembers = function updateProjectByMembers (req, res, next) {
+  var id = req.swagger.params['id'].value;
+  var body = req.swagger.params['body'].value;
+  Project.updateProjectByMembers(id,body)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
