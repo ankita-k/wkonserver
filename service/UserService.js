@@ -126,7 +126,7 @@ exports.getUserById = function (id) {
  **/
 exports.getUserTags = function (tags) {
   return new Promise(function (resolve, reject) {
-    User.find({ tags: { $in: tags } }).populate({ path: 'manager' }).exec(function (error, user) {
+    User.find({ tags: { $in: [tags] } }).populate({ path: 'manager' }).exec(function (error, user) {
       console.log(user);
       console.log(error)
       if (error) {
