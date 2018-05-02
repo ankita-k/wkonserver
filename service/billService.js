@@ -37,11 +37,11 @@ exports.createBill = function (body) {
     });
 }
 
-exports.getBill = function (id) {
+exports.getBill = function (userId) {
     return new Promise(function (resolve, reject) {
         // let perPage = parseInt(limit) ? parseInt(limit) : 10;
         // let pageCount = parseInt(page) ? parseInt(page) : 0;
-        Bill.find({ createdBy: id })
+        Bill.find({ createdBy: userId })
             .sort({ "createdDate": -1 })
             .populate('projectName')
             .populate('client')

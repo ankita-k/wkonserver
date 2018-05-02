@@ -59,6 +59,20 @@ module.exports.getUserById = function getUserById (req, res, next) {
     });
 };
 
+
+module.exports.getUserTags = function getUserTags (req, res, next) {
+  var tags = req.swagger.params['tags'].value;
+  User.getUserTags(tags)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
+
 module.exports.getAllUser = function getAllUser (req, res, next) {
   User.getAllUser()
     .then(function (response) {

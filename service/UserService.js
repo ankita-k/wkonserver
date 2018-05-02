@@ -74,7 +74,7 @@ exports.createUsersWithArrayInput = function (body) {
  **/
 exports.deleteUser = function (id) {
   return new Promise(function (resolve, reject) {
-    User.findOneAndRemove({ _id: id } ,(error, user) => {
+    User.findOneAndRemove({ _id: id }, (error, user) => {
       console.log(user);
       console.log(error)
       if (error) {
@@ -100,7 +100,7 @@ exports.deleteUser = function (id) {
  **/
 exports.getUserById = function (id) {
   return new Promise(function (resolve, reject) {
-    User.findOne({ _id: id }).populate({path: 'manager'}).exec(function(error, user) {
+    User.findOne({ _id: id }).populate({ path: 'manager' }).exec(function (error, user) {
       console.log(user);
       console.log(error)
       if (error) {
@@ -116,6 +116,40 @@ exports.getUserById = function (id) {
   });
 }
 
+
+/**
+ * Get user by tags value
+ * 
+ *
+ * username String The name that needs to be fetched. Use user1 for testing. 
+ * returns User
+ **/
+exports.getUserTags = function (tags) {
+  return new Promise(function (resolve, reject) {
+    User.find({ tags: { $in: tags } }).populate({ path: 'manager' }).exec(function (error, user) {
+      console.log(user);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (user)
+        resolve({ error: false, result: user });
+      else
+        resolve({ error: true, message: "User does not exist" })
+    })
+
+  });
+}
+
+
+
+
+
+
+
+
+
 /**
  * Get all user
  * 
@@ -125,7 +159,7 @@ exports.getUserById = function (id) {
  **/
 exports.getAllUser = function () {
   return new Promise(function (resolve, reject) {
-    User.find({}).populate({path: 'manager'}).exec(function(error, user){
+    User.find({}).populate({ path: 'manager' }).exec(function (error, user) {
       console.log(user);
       console.log(error)
       if (error) {
@@ -152,7 +186,7 @@ exports.getAllUser = function () {
  **/
 exports.loginUser = function (email, password) {
   return new Promise(function (resolve, reject) {
-    User.findOneAndUpdate({ email: email, password: password },{$set:{lastLogin : Date.now()}} ,(error, user) => {
+    User.findOneAndUpdate({ email: email, password: password }, { $set: { lastLogin: Date.now() } }, (error, user) => {
       console.log(user);
       console.log(error)
       if (error) {
@@ -361,9 +395,9 @@ exports.clientDashboardDetails = function (id) {
           }
         });
       }
-      else{
+      else {
         resolve({ error: true, message: "There is no project with any user" })
-      } 
+      }
     })
   });
 }

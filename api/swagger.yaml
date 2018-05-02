@@ -223,7 +223,7 @@ paths:
         '404':
           description: User not found
       x-swagger-router-controller: User
-  /user/delete:    
+  /user/delete:
     delete:
       security:
         - key: []
@@ -246,7 +246,7 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
-      x-swagger-router-controller: User   
+      x-swagger-router-controller: User
   /user/getAllUser:
     get:
       security:
@@ -268,7 +268,7 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
-      x-swagger-router-controller: User   
+      x-swagger-router-controller: User
   /user/dashboardDetails:
     get:
       security:
@@ -352,7 +352,33 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
-      x-swagger-router-controller: User                   
+      x-swagger-router-controller: User
+  /user/findBytags:
+    get:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Get user by tags
+      description: ''
+      operationId: getUserTags
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: tags
+          in: query
+          description: The user name for login
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+      x-swagger-router-controller: User    
   /client:
     post:
       security:
@@ -530,7 +556,7 @@ paths:
           description: Invalid username supplied
         '404':
           description: Client not found
-      x-swagger-router-controller: Client    
+      x-swagger-router-controller: Client
   /project:
     post:
       security:
@@ -720,15 +746,22 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - name: body
-          in: body
-          description: Updated bill object
+        - name: id
+          in: query
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Created user object
           required: true
           schema:
             $ref: '#/definitions/Bill'
       responses:
-        default:
-          description: successful operation
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: bill not found    
       x-swagger-router-controller: Bill
 definitions:
   User:
@@ -740,10 +773,14 @@ definitions:
         type: string
       password:
         type: string
+      tags:
+        type: array
+        items: 
+          type: string
       manager:
         type: string
       role:
-        type: string    
+        type: string
     example:
       password: password
       role: role
@@ -833,22 +870,22 @@ definitions:
     properties:
       userId:
         type: string
-      billingDate: 
+      billingDate:
         type: string
       paypalBillNumber:
         type: string
       billNumber:
         type: string
-      BDE: 
+      BDE:
         type: string
-      type: 
+      type:
         type: string
       client:
         type: string
       company:
         type: string
       paypalAccountName:
-        type: string 
+        type: string
       email:
         type: string
       projectName:
@@ -866,23 +903,23 @@ definitions:
       status:
         type: string
     example:
-      userId: "user id of logged in user"
-      billingDate: "Date"
-      paypalBillNumber: "paypal bill number"
-      billNumber: "bill number"
-      BDE: "id of the sales person"
-      type: "type"
-      client: "id of the client"
-      company: "company of client"
-      paypalAccountName: "paypal account name"
-      email: "client email"
-      projectName: "project"
+      userId: user id of logged in user
+      billingDate: Date
+      paypalBillNumber: paypal bill number
+      billNumber: bill number
+      BDE: id of the sales person
+      type: type
+      client: id of the client
+      company: company of client
+      paypalAccountName: paypal account name
+      email: client email
+      projectName: project
       projectCost: 2000
       receivedAmount: 500
       balance: 1500
       currency: USD
-      receivedDate: "Date when the credit is received"
-      status: "status of the bill"
+      receivedDate: Date when the credit is received
+      status: status of the bill
     xml:
       name: bill
   passwords:

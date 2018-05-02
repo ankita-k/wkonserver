@@ -6,46 +6,49 @@ module.exports = mongoose.model('user', new Schema({
     name: {
         type: String
     },
-    password:  {
+    password: {
         type: String
     },
-    role:  {
+    role: {
         type: String
     },
-    email:  {
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    phoneNumber:{
+    phoneNumber: {
         type: String
     },
-    lastLogin:{
+    lastLogin: {
         type: Date
     },
-    manager :{
+    manager: {
         type: Schema.ObjectId,
         ref: 'user'
     },
-    createdBy:{
+    tags: {
+        type: Array
+    },
+    createdBy: {
         type: Schema.ObjectId,
         ref: 'user'
     },
-    updatedBy:{
+    updatedBy: {
         type: Schema.ObjectId,
         ref: 'user'
     },
-    createdDate:{
+    createdDate: {
         type: Date,
         default: Date.now()
     },
-    updatedDate:{
+    updatedDate: {
         type: Date,
         default: Date.now()
     },
-    enable:{
+    enable: {
         type: Number,
         default: 0
     }
-    
+
 }));
