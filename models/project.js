@@ -2,7 +2,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
-module.exports = mongoose.model('project', new Schema({
+
+
+
+
+const projectSchema = mongoose.Schema({
 
     name: {
         type: String,
@@ -38,18 +42,18 @@ module.exports = mongoose.model('project', new Schema({
         {
             userId: {
                 type: Schema.ObjectId,
-                ref: 'User'
+                ref: 'user'
             },
             role: String
         }
     ],
     createdBy:{
         type: Schema.ObjectId,
-        ref: 'User'
+        ref: 'user'
     },
     updatedBy:{
         type: Schema.ObjectId,
-        ref: 'User'
+        ref: 'user'
     },
     createdDate:{
         type: Date,
@@ -63,6 +67,21 @@ module.exports = mongoose.model('project', new Schema({
         type: Number,
         default: 0
     }
-}));
+  
+});
+
+projectSchema.pre('findOne', function (next) {
+    this.populate('members.userId');
+    next();
+});
+
+projectSchema.pre('find', function (next) {
+    this.populate('members.userId');
+    next();
+});
+
+const project = module.exports = mongoose.model('project',projectSchema) 
+
+
 
 
