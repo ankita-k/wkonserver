@@ -50,8 +50,8 @@ exports.getProjectList = function (id) {
     // let perPage = parseInt(limit) ? parseInt(limit) : 10;
     // let pageCount = parseInt(page) ? parseInt(page) : 0;
     project.find({ "members.userId": id })
-      .populate({path: 'client'})
-      .sort({"createdDate": -1 })
+      .populate({ path: 'client' })
+      .sort({ "createdDate": -1 })
       // .limit(perPage)
       // .skip(perPage * pageCount)
       .then(projectList => {
@@ -124,7 +124,7 @@ exports.deleteProject = function (id) {
 exports.getProjectById = function (id) {
   return new Promise(function (resolve, reject) {
 
-    project.findOne({_id: id }).populate({path: 'client'}).exec(function(error, result){
+    project.findOne({ _id: id }).populate({ path: 'client' }).exec(function (error, result) {
       console.log(result);
       console.log(error)
       if (error) {
@@ -190,7 +190,7 @@ exports.getProjectById = function (id) {
  **/
 exports.updateProject = function (id, body) {
   return new Promise(function (resolve, reject) {
-    project.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }).populate({path: 'client'}).exec(function (error, result){
+    project.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }).populate({ path: 'client' }).exec(function (error, result) {
       console.log(result);
       console.log(error)
       if (error) {
@@ -210,7 +210,7 @@ exports.updateProject = function (id, body) {
 exports.updateProjectByMembers = function (id, body) {
   console.log(body);
   return new Promise(function (resolve, reject) {
-    project.findOneAndUpdate({ _id: id },{ $pushAll: { members: body } }, {upsert: true }).populate({path: 'client'}).exec(function (error, result){
+    project.findOneAndUpdate({ _id: id }, { $pushAll: { members: body } }, { upsert: true }, { new: true }).populate({ path: 'client' }).exec(function (error, result) {
       console.log(result);
       console.log(error)
       if (error) {
