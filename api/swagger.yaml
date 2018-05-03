@@ -636,13 +636,13 @@ paths:
           description: Updated user object
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/addmember'
       responses:
         '400':
           description: Invalid user supplied
         '404':
           description: project not found 
-      x-swagger-router-controller: Project       
+      x-swagger-router-controller: addmember       
   '/project/{id}':
     get:
       security:
@@ -968,3 +968,15 @@ definitions:
       newPassword: newPassword
     xml:
       name: passwords
+  addmember:
+    type: object
+    properties:
+      userId: 
+        type: string
+      role: 
+        type: string
+    example:
+       userId: userId
+       role: role     
+    xml:
+      name: addmember

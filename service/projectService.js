@@ -209,7 +209,7 @@ exports.updateProject = function (id, body) {
 */
 exports.updateProjectByMembers = function (id, body) {
   return new Promise(function (resolve, reject) {
-    project.findOneAndUpdate({ _id: id },{ $push: { members: { userId: body.userId} } }, { new: true }).populate({path: 'client'}).exec(function (error, result){
+    project.findOneAndUpdate({ _id: id },{ $push: { members: { userId: body.userId,role: body.role} } }, { new: true }).populate({path: 'client'}).exec(function (error, result){
       console.log(result);
       console.log(error)
       if (error) {
