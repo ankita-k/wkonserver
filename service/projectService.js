@@ -208,8 +208,9 @@ exports.updateProject = function (id, body) {
 /* Api to update members for the project
 */
 exports.updateProjectByMembers = function (id, body) {
+  console.log(body);
   return new Promise(function (resolve, reject) {
-    project.findOneAndUpdate({ _id: id },{ $push: { members: { userId: body.userId,role: body.role} } }, { new: true }).populate({path: 'client'}).exec(function (error, result){
+    project.findOneAndUpdate({ _id: id },{ $pushAll: { members: body } }, {upsert: true }).populate({path: 'client'}).exec(function (error, result){
       console.log(result);
       console.log(error)
       if (error) {
