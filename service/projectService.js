@@ -210,7 +210,7 @@ exports.updateProject = function (id, body) {
 exports.updateProjectByMembers = function (id, body) {
   console.log(body);
   return new Promise(function (resolve, reject) {
-    project.findOneAndUpdate({ _id: id }, { $pushAll: { members: body } }, { upsert: true }, { new: true }).populate({ path: 'client' }).exec(function (error, result) {
+    project.findOneAndUpdate({ _id: id }, { $pushAll: { members: body } }, { upsert: true , new: true }).populate({ path: 'client' }).exec(function (error, result) {
       console.log(result);
       console.log(error)
       if (error) {
