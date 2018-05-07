@@ -793,6 +793,53 @@ paths:
         '404':
           description: bill not found    
       x-swagger-router-controller: Bill
+  '/bill/{id}':  
+    delete:
+      security:
+        - key: []
+      tags:
+        - bill
+      summary: Delete bill
+      description: This can only be done by the logged in user.
+      operationId: deleteBill
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The bill that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid project supplied
+        '404':
+          description: Bill not found
+      x-swagger-router-controller: Bill    
+  /email:
+    post:
+      security:
+        - key: []
+      tags:
+        - email
+      summary: send email
+      description: This enables a user to send a email.
+      operationId: sendmail
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: name
+          description: Created email object
+          required: true
+          schema:
+            $ref: '#/definitions/Email'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: email
 definitions:
   User:
     type: object
@@ -982,3 +1029,33 @@ definitions:
        role: role     
     xml:
       name: addmember
+  Email:
+    type: object
+    properties:
+        name: 
+          type: string
+        email: 
+          type: string
+        subject: 
+          type: string  
+    example:
+       name: name
+       email: email
+       subject: subject
+    xml:
+      name: Email    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      

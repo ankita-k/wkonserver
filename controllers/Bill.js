@@ -17,8 +17,8 @@ module.exports.createBill = function createBill (req, res, next) {
 
 
 module.exports.deleteBill = function deleteBill (req, res, next) {
-  var _id = req.swagger.params['id'].value;
-  Bill.deleteBill(_id)
+  var id = req.swagger.params['id'].value;
+  Bill.deleteBill(id)
     .then(function (response) {
       utils.writeJson(res, response);
     })
