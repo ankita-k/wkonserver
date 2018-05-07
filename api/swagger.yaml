@@ -831,7 +831,7 @@ paths:
         - application/json
       parameters:
         - in: body
-          name: name
+          name: body
           description: Created email object
           required: true
           schema:
