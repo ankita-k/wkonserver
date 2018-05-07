@@ -19,7 +19,7 @@ exports.createClient = function (body) {
       domain: body.domain,
       phoneNumber: body.phoneNumber,
       status: body.status,
-      address: body.status,
+      address: body.address,
       company: body.company,
       paypalId: body.paypalId,
       currency: body.currency,
