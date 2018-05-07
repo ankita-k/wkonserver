@@ -207,25 +207,71 @@ exports.updateProject = function (id, body) {
 
 /* Api to update members for the project
 */
+// exports.updateProjectByMembers = function (id, body) {
+//   console.log(body);
+//   return new Promise(function (resolve, reject) {
+//     project.findOneAndUpdate({ _id: id }, { 'members': { $in: [{ $ne: body }] } }, { $pushAll: { members: body } }, { upsert: true, new: true }).populate({ path: 'client' }).exec(function (error, result) {
+//       console.log(result);
+//       console.log(error)
+//       if (error) {
+//         reject(error);
+//         return;
+//       }
+//       if (result)
+//         resolve({ error: false, result: result });
+//       else
+//         resolve({ error: true, message: "No such project found" })
+//     })
+//   });
+// }
+
+/* Api to update members whow are not allocated to the project */
+
 exports.updateProjectByMembers = function (id, body) {
-  console.log(body);
+  let arrayofId = body.map(element => element.userId);
+  let newArray = [];
   return new Promise(function (resolve, reject) {
-    project.findOneAndUpdate({ _id: id }, { $pushAll: { members: body } }, { upsert: true , new: true }).populate({ path: 'client' }).exec(function (error, result) {
-      console.log(result);
-      console.log(error)
+    project.findOne({ _id: id, 'members.userId': { '$in': arrayofId } }, { 'members': 1 }).populate({ path: 'client' }).exec(function (error, result) {
+      if(result && result.members.length>1)
+      {
+              console.log(result.members);
+
+      arrayofId = result.members.map(element => {if(element.userId)
+        return (element.userId._id).toString()});
+        console.log(arrayofId);
+      newArray = body.filter((obj) => {
+        return arrayofId.indexOf(obj.userId) == -1;
+      })
+    }
+    else
+    {
+    arrayofId=[];
+    newArray =body; 
+    }
+
+      console.log(newArray)
       if (error) {
         reject(error);
         return;
       }
-      if (result)
-        resolve({ error: false, result: result });
-      else
-        resolve({ error: true, message: "No such project found" })
+      else {
+        project.findOneAndUpdate({ _id: id }, { $pushAll: { members: newArray } }, { upsert: true, new: true }).populate({ path: 'client' }).exec(function (error, result) {
+          console.log(result);
+          console.log(error)
+          if (error) {
+            reject(error);
+            return;
+          }
+          if (result)
+            resolve({ error: false, result: result });
+          else
+            resolve({ error: true, message: "No such project found" })
+        })
+      }
     })
+
   });
 }
-
-
 
 
 
