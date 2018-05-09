@@ -1,6 +1,7 @@
 'use strict'
 const nodemailer = require('nodemailer');
 const fs = require('fs');
+const path = require('path');
 // const key= 'mefysitekey';
 var handlebars = require('handlebars');
 
@@ -19,7 +20,6 @@ let transporter = nodemailer.createTransport({
 
 let readHTMLFile = function (path, callback) {
     fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
-        console.log(html);
         if (err) {
             throw err;
         }
@@ -40,7 +40,7 @@ exports.sendmail = function (body) {
 
         console.log('directory',__dirname);
 
-        readHTMLFile(__dirname+'/templates/email.html', function (err, html) {
+        readHTMLFile(__dirname+'/templates/welcome.html', function (err, html) {
 
             var template = handlebars.compile(html);
             var replacements;
@@ -69,34 +69,13 @@ exports.sendmail = function (body) {
                 console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
                 // response.send("sent mail");
 
+                resolve({ error: false, message: "Mail sent successfully" });
+
             });
 
         });
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

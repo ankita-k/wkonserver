@@ -41,6 +41,18 @@ module.exports.getProjectByMembers = function getProjectByMembers (req, res, nex
 };
 
 
+module.exports.deleteProjectByMemberId = function deleteProjectByMemberId (req, res, next) {
+  var id = req.swagger.params['id'].value;
+  var userId = req.swagger.params['userId'].value;
+  Project.deleteProjectByMemberId(id,userId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
 // module.exports.createUsersWithArrayInput = function createUsersWithArrayInput (req, res, next) {
 //   var body = req.swagger.params['body'].value;
 //   Client.createUsersWithArrayInput(body)

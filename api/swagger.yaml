@@ -643,6 +643,36 @@ paths:
         '404':
           description: project not found
       x-swagger-router-controller: Project
+  /project/deletemember:
+    put:
+      security:
+        - key: []
+      tags:
+        - project
+      summary: Updated project
+      description: This can only be done by the logged in user.
+      operationId: deleteProjectByMemberId
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: userId
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/Deletemember'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: project not found
+      x-swagger-router-controller: Project    
   '/project/{id}':
     get:
       security:
@@ -1102,3 +1132,20 @@ definitions:
       file: file
     xml:
       name: file
+  Deletemember:
+    type: object
+    properties:
+      userId: 
+        type: string
+    example:
+      userId: userId
+    xml:
+      name: Deletemember  
+
+
+
+
+
+
+
+

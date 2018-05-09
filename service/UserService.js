@@ -283,11 +283,13 @@ exports.findByRole = function (role) {
 exports.userDashboardDetails = function (id) {
   return new Promise(function (resolve, reject) {
     project.aggregate([
+      {$unwind: '$members'},
       {
-        $match: { createdBy: ObjectID(id) }
+        $match: { $or: [{ createdBy: ObjectID(id) }, { 'members.userId':ObjectID(id) }] }
       },
       { $group: { _id: '$status', count: { $sum: 1 } } }
     ], (error, res) => {
+      console.log(res);
       if (error) {
         reject(error)
         return;
