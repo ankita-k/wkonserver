@@ -19,14 +19,14 @@ exports.createUser = function (body) {
       if (err) {
         if (err.errors && err.errors.email)  // error check if email is not present
         {
-          reject({ "message": "Email is required to create a user" })
+          reject({ error: true, "message": "Email is required to create a user" })
         }
         else if (err.code == 11000) // error check if email is not unique
         {
-          reject({ "message": "This email already exists" })
+          reject({ error: true, "message": "Email or Phone number already exists" })
         }
         else
-          reject({ error: true, err });
+          reject({ error: true,"message": "User Creation Failed!"   });
 
         return;
       }
@@ -283,9 +283,9 @@ exports.findByRole = function (role) {
 exports.userDashboardDetails = function (id) {
   return new Promise(function (resolve, reject) {
     project.aggregate([
-      {$unwind: '$members'},
+      { $unwind: '$members' },
       {
-        $match: { $or: [{ createdBy: ObjectID(id) }, { 'members.userId':ObjectID(id) }] }
+        $match: { $or: [{ createdBy: ObjectID(id) }, { 'members.userId': ObjectID(id) }] }
       },
       { $group: { _id: '$status', count: { $sum: 1 } } }
     ], (error, res) => {
