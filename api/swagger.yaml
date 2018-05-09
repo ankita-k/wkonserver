@@ -970,6 +970,86 @@ paths:
         '404':
           description: Module not found
       x-swagger-router-controller: Module 
+    put:
+      security:
+        - key: []
+      tags:
+        - module
+      summary: Updated module
+      description: This can only be done by the logged in user.
+      operationId: updatemodule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/Module'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: project not found
+      x-swagger-router-controller: Module
+    delete:
+      security:
+        - key: []
+      tags:
+        - module
+      summary: Delete module
+      description: This can only be done by the logged in user.
+      operationId: deletemodule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The project that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid module supplied
+        '404':
+          description: module not found
+      x-swagger-router-controller: Module  
+  /module/getbyprojectid:
+     get:
+      security:
+        - key: []
+      tags:
+        - module
+      summary: Get project by id
+      description: ''
+      operationId: getmoduleBYProjectId
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Module'
+        '400':
+          description: Invalid Module Id supplied
+        '404':
+          description: Module not found
+      x-swagger-router-controller: Module 
 definitions:
   User:
     type: object
@@ -1174,15 +1254,6 @@ definitions:
       subject: subject
     xml:
       name: Email
-  File:
-    type: object
-    properties:
-      file:
-        type: object
-    example:
-      file: file
-    xml:
-      name: file
   Deletemember:
     type: object
     properties:

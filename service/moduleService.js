@@ -76,7 +76,7 @@ exports.getmoduleBYProjectId = function (id) {
  **/
 exports.deletemodule = function (id) {
     return new Promise(function (resolve, reject) {
-        moduleService.findOneAndRemove({ _id: id },{new:true} ,(error, module) => {
+        moduleService.findOneAndRemove({ _id: id}  ,(error, module) => {
             if (error) {
                 reject(error);
                 return;

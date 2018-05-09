@@ -57,7 +57,7 @@ module.exports.deletemodule = function deletemodule (req, res, next) {
 
 module.exports.updatemodule = function updatemodule (req, res, next) {
     var id = req.swagger.params['id'].value;
-    var id = req.swagger.params['body'].value;
+    var body = req.swagger.params['body'].value;
     moduleService.updatemodule(id,body)
       .then(function (response) {
         utils.writeJson(res, response);
