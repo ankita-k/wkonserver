@@ -1050,6 +1050,137 @@ paths:
         '404':
           description: Module not found
       x-swagger-router-controller: Module 
+  /submodule:
+    post:
+      security:
+        - key: []
+      tags:
+        - submodule
+      summary: submodule 
+      description: This enables a user to create.
+      operationId: createsubmodule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created sub module object
+          required: true
+          schema:
+            $ref: '#/definitions/Submodule'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: Submodule  
+  '/submodule/{id}':
+    get:
+      security:
+        - key: []
+      tags:
+        - submodule
+      summary: Get project by id
+      description: ''
+      operationId: getsubmodule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Submodule'
+        '400':
+          description: Invalid Module Id supplied
+        '404':
+          description: Module not found
+      x-swagger-router-controller: Submodule 
+    put:
+      security:
+        - key: []
+      tags:
+        - submodule
+      summary: Updated module
+      description: This can only be done by the logged in user.
+      operationId: updatesubmodule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/Submodule'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: project not found
+      x-swagger-router-controller: Submodule 
+    delete:
+      security:
+        - key: []
+      tags:
+        - submodule
+      summary: Delete module
+      description: This can only be done by the logged in user.
+      operationId: deletesubmodule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: The module that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid module supplied
+        '404':
+          description: module not found
+      x-swagger-router-controller: Submodule 
+  /submodule/getbymoduleid:
+    get:
+      security:
+        - key: []
+      tags:
+        - submodule
+      summary: Get project by id
+      description: ''
+      operationId: getsubmoduleByModule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Submodule'
+        '400':
+          description: Invalid Module Id supplied
+        '404':
+          description: Module not found
+      x-swagger-router-controller: Submodule    
 definitions:
   User:
     type: object
@@ -1278,6 +1409,21 @@ definitions:
       projectId: projectId
     xml:
       name: Module 
+  Submodule:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      moduleId:
+        type: string
+    example:
+      name: name
+      description: description
+      moduleId: moduleId
+    xml:
+      name: Submodule     
 
 
 
