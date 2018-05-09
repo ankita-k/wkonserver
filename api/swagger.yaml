@@ -919,6 +919,57 @@ paths:
         default:
           description: Invalid request
       x-swagger-router-controller: Upload
+  /module:
+    post:
+      security:
+        - key: []
+      tags:
+        - module
+      summary: send email
+      description: This enables a user to send a email.
+      operationId: createmodule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created email object
+          required: true
+          schema:
+            $ref: '#/definitions/Module'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: Module
+  '/module/{id}':
+    get:
+      security:
+        - key: []
+      tags:
+        - module
+      summary: Get project by id
+      description: ''
+      operationId: getmodule
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Module'
+        '400':
+          description: Invalid Module Id supplied
+        '404':
+          description: Module not found
+      x-swagger-router-controller: Module 
 definitions:
   User:
     type: object
@@ -1141,7 +1192,21 @@ definitions:
       userId: userId
     xml:
       name: Deletemember  
-
+  Module:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      projectId:
+        type: string
+    example:
+      name: name
+      description: description
+      projectId: projectId
+    xml:
+      name: Module 
 
 
 
