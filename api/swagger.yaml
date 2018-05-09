@@ -378,7 +378,7 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
-      x-swagger-router-controller: User    
+      x-swagger-router-controller: User
   /client:
     post:
       security:
@@ -641,8 +641,8 @@ paths:
         '400':
           description: Invalid user supplied
         '404':
-          description: project not found 
-      x-swagger-router-controller: Project       
+          description: project not found
+      x-swagger-router-controller: Project
   '/project/{id}':
     get:
       security:
@@ -723,6 +723,34 @@ paths:
         '404':
           description: Project not found
       x-swagger-router-controller: Project
+  /project/getbymemberId:
+     get:
+      security:
+        - key: []
+      tags:
+        - project
+      summary: Get project by id
+      description: ''
+      operationId: getProjectByMembers
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Project'
+        '400':
+          description: Invalid Project Id supplied
+        '404':
+          description: Project not found
+      x-swagger-router-controller: Project
   /bill:
     post:
       security:
@@ -791,9 +819,9 @@ paths:
         '400':
           description: Invalid user supplied
         '404':
-          description: bill not found    
+          description: bill not found
       x-swagger-router-controller: Bill
-  '/bill/{id}':  
+  '/bill/{id}':
     delete:
       security:
         - key: []
@@ -816,7 +844,7 @@ paths:
           description: Invalid project supplied
         '404':
           description: Bill not found
-      x-swagger-router-controller: Bill    
+      x-swagger-router-controller: Bill
   /email:
     post:
       security:
@@ -840,6 +868,27 @@ paths:
         default:
           description: successful operation
       x-swagger-router-controller: email
+  /file:
+    post:
+      operationId: fileUpload
+      tags:
+        - file
+      description: Upload image
+      consumes:
+        - multipart/form-data
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: file
+          in: formData
+          type: file
+          description: Image information
+          required: true
+      responses:
+        '200':
+          description: Successful request
+        default:
+          description: Invalid request
+      x-swagger-router-controller: Upload
 definitions:
   User:
     type: object
@@ -852,7 +901,7 @@ definitions:
         type: string
       tags:
         type: array
-        items: 
+        items:
           type: string
       manager:
         type: string
@@ -1020,42 +1069,36 @@ definitions:
     items:
       type: object
       properties:
-        userId: 
+        userId:
           type: string
-        role: 
+        role:
           type: string
     example:
-       userId: userId
-       role: role     
+      userId: userId
+      role: role
     xml:
       name: addmember
   Email:
     type: object
     properties:
-        name: 
-          type: string
-        email: 
-          type: string
-        subject: 
-          type: string  
+      name:
+        type: string
+      email:
+        type: string
+      subject:
+        type: string
     example:
-       name: name
-       email: email
-       subject: subject
+      name: name
+      email: email
+      subject: subject
     xml:
-      name: Email    
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+      name: Email
+  File:
+    type: object
+    properties:
+      file:
+        type: object
+    example:
+      file: file
+    xml:
+      name: file

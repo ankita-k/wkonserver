@@ -232,22 +232,22 @@ exports.updateProjectByMembers = function (id, body) {
   let newArray = [];
   return new Promise(function (resolve, reject) {
     project.findOne({ _id: id, 'members.userId': { '$in': arrayofId } }, { 'members': 1 }).populate({ path: 'client' }).exec(function (error, result) {
-      if(result && result.members.length>1)
-      {
-              console.log(result.members);
+      if (result && result.members.length > 1) {
+        console.log(result.members);
 
-      arrayofId = result.members.map(element => {if(element.userId)
-        return (element.userId._id).toString()});
+        arrayofId = result.members.map(element => {
+          if (element.userId)
+            return (element.userId._id).toString()
+        });
         console.log(arrayofId);
-      newArray = body.filter((obj) => {
-        return arrayofId.indexOf(obj.userId) == -1;
-      })
-    }
-    else
-    {
-    arrayofId=[];
-    newArray =body; 
-    }
+        newArray = body.filter((obj) => {
+          return arrayofId.indexOf(obj.userId) == -1;
+        })
+      }
+      else {
+        arrayofId = [];
+        newArray = body;
+      }
 
       console.log(newArray)
       if (error) {
@@ -273,8 +273,23 @@ exports.updateProjectByMembers = function (id, body) {
   });
 }
 
+exports.getProjectByMembers = function (id) {
+  return new Promise(function (resolve, reject) {
 
-
+    project.findOne({'members.userId': { '$in': id } }).populate({ path: 'client' }).exec(function (error, result) {
+      console.log(result);
+      console.log(error)
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (result)
+        resolve({ error: false, result: result });
+      else
+        resolve({ error: true, message: "No such user for this project found" })
+    })
+  });
+}
 
 
 

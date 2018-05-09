@@ -27,6 +27,20 @@ module.exports.getProjectList = function getProjectList (req, res, next) {
     });
 };
 
+
+
+module.exports.getProjectByMembers = function getProjectByMembers (req, res, next) {
+  var id = req.swagger.params['id'].value;
+  Project.getProjectByMembers(id)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
 // module.exports.createUsersWithArrayInput = function createUsersWithArrayInput (req, res, next) {
 //   var body = req.swagger.params['body'].value;
 //   Client.createUsersWithArrayInput(body)
