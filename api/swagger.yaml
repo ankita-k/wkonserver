@@ -1283,7 +1283,67 @@ paths:
           description: Invalid module supplied
         '404':
           description: module not found
-      x-swagger-router-controller: Task         
+      x-swagger-router-controller: Task 
+  /task/addassignto:
+    put:
+      security:
+        - key: []
+      tags:
+        - task
+      summary: Updated task
+      description: This can only be done by the logged in user.
+      operationId: updatetaskmember
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/addMember'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: task not found
+      x-swagger-router-controller: Task 
+  /task/deleteassignto:
+    put:
+      security:
+        - key: []
+      tags:
+        - task
+      summary: Updated task
+      description: This can only be done by the logged in user.
+      operationId: deletetaskByassigntoId
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/addMember'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: task not found
+      x-swagger-router-controller: Task     
 definitions:
   User:
     type: object
@@ -1541,7 +1601,16 @@ definitions:
       description: description
       submoduleId: moduleId
     xml:
-      name: Task          
+      name: Task 
+  addMember:
+    type: object
+    properties:
+      assignTo:
+        type: string
+    example:
+      userId: assignTo
+    xml:
+      name: addMember 
 
 
 

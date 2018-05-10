@@ -131,7 +131,7 @@ exports.updatetaskmember = function (id, body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.id;
         body.updatedDate = Date.now();
-        task.findOneAndUpdate({ _id: id }, { $push: { assignTo: body.userId } }, { new: true }, (error, task) => {
+        task.findOneAndUpdate({ _id: id }, { $push: { assignTo: body.assignTo } }, { new: true }, (error, task) => {
             console.log(task);
             console.log(error)
             if (error) {
@@ -152,7 +152,7 @@ exports.updatetaskmember = function (id, body) {
 exports.deletetaskByassigntoId = function (id, body) {
     return new Promise(function (resolve, reject) {
 
-        project.findOneAndUpdate({ _id: id }, { $pull: { assignTo: body.userId } }, { new: true }).exec(function (error, result) {
+        task.findOneAndUpdate({ _id: id }, { $pull: { assignTo: body.assignTo } }, { new: true }).exec(function (error, result) {
             console.log(result);
             console.log(error)
             if (error) {

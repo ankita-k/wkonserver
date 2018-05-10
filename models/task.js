@@ -16,10 +16,10 @@ const taskSchema = mongoose.Schema({
     endDate: {
         type: Date
     },
-    assignTo:{
+    assignTo:[{
         type: Schema.ObjectId,
         ref: 'user'
-    },
+    }],
     submoduleId: {
         type: Schema.ObjectId,
         ref: 'submodule'
