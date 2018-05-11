@@ -33,7 +33,7 @@ exports.createBill = function (body) {
                 return;
             }
             else{
-                Server.io.emit('billCreated',result);
+                Server.io.emit('billCreated',bill);
                 resolve({ error: false, result: bill });
             }
             

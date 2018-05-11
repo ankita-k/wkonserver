@@ -45,7 +45,7 @@ exports.createClient = function (body) {
         return;
       }
       else{
-        Server.io.emit('clientCreated',result);
+        Server.io.emit('clientCreated',client);
         resolve({ error: false, result: client });
       }
       

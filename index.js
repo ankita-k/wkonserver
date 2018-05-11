@@ -85,15 +85,15 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
         });
       });
-      io.use(function (socket, next) {
-        if (socket.request._query['userId'] != 'null' || socket.request._query['userId'] != undefined) {
-          helper.addSocketId(socket.request._query['userId'], socket.id, (error, response) => {
+      // io.use(function (socket, next) {
+      //   if (socket.request._query['userId'] != 'null' || socket.request._query['userId'] != undefined) {
+      //     // helper.addSocketId(socket.request._query['userId'], socket.id, (error, response) => {
 
-          });
+      //     // });
 
-          next();
-        }
-      });
+      //     next();
+      //   }
+      // });
 
       exports.server = server
       exports.io = io

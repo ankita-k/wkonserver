@@ -40,7 +40,7 @@ exports.createProject = function (body) {
       else if (result) {
         console.log(result)
         data.populate('client', function (err, res) {
-          Server.io.emit('projectCreated', result);
+          Server.io.emit('projectCreated', res);
           resolve({ error: false, result: res });
         });
       }

@@ -36,7 +36,7 @@ exports.createUser = function (body) {
         return;
       }
       else {
-        Server.io.emit('userCreated',result);
+        Server.io.emit('userCreated',user);
         resolve({ error: false, result: user });
       }
 
