@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 // const key= 'mefysitekey';
 var handlebars = require('handlebars');
+var User = require('../models/user');
 
 
 
@@ -37,41 +38,57 @@ exports.sendmail = function (body) {
         var email = body.email;
         var name = body.name;
         var subject = body.subject;
+        var userId = body.userId
 
-        console.log('directory',__dirname);
+        console.log('directory', __dirname);
 
-        readHTMLFile(__dirname+'/templates/welcome.html', function (err, html) {
+        readHTMLFile(__dirname + '/templates/welcome.html', function (err, html) {
 
             var template = handlebars.compile(html);
             var replacements;
             var mailOptions;
             var htmlToSend;
-   
+            var ccto;
+
             replacements = {
                 name: name
             };
 
-            htmlToSend = template(replacements);
-            mailOptions = {
-                from: 'memeinfotechnotifications@gmail.com', // sender address
-                to: email, // list of receivers
-                subject: subject, // Subject line 
-                html: htmlToSend
-            };
-
-            // send mail with defined transport object
-            transporter.sendMail(mailOptions, (error, info) => {
+            User.findOne({ _id: userId }, (error, result) => {
+                console.log(error);
+                console.log(result);
                 if (error) {
-                    return console.log(error);
+                    reject(error)
                 }
-                console.log('Message sent: %s', info.messageId);
+                else if (result) {
+                    ccto = result.email;
+console.log("fgxfg--------------",ccto)
 
-                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                // response.send("sent mail");
+                    htmlToSend = template(replacements);
+                    mailOptions = {
+                        from: 'memeinfotechnotifications@gmail.com', // sender address
+                        to: email, // list of receivers
+                        subject: subject, // Subject line 
+                        html: htmlToSend,
+                        cc:['abhijit.roy@memeinfotech.com',ccto]
+                    };
 
-                resolve({ error: false, message: "Mail sent successfully" });
+                    // send mail with defined transport object
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            return console.log(error);
+                        }
+                        console.log('Message sent: %s', info.messageId);
 
-            });
+                        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                        // response.send("sent mail");
+
+                        resolve({ error: false, message: "Mail sent successfully" });
+
+                    });
+
+                }
+            })
 
         });
     });
