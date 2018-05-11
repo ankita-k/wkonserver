@@ -3,6 +3,11 @@ var User = require('../models/user');
 var project = require('../models/project');
 var ObjectID = require('mongodb').ObjectID;
 var client = require('../models/client');
+var Server = require('../index');
+var helper = require('../utils/helper');
+
+
+
 
 /**
  * Create user
@@ -26,11 +31,15 @@ exports.createUser = function (body) {
           reject({ error: true, "message": "Email or Phone number already exists" })
         }
         else
-          reject({ error: true,"message": "User Creation Failed!"   });
+          reject({ error: true, "message": "User Creation Failed!" });
 
         return;
       }
-      resolve({ error: false, result: user });
+      else {
+        Server.io.emit('userCreated',result);
+        resolve({ error: false, result: user });
+      }
+
     })
 
   });

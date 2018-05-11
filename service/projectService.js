@@ -1,5 +1,7 @@
 'use strict';
 var project = require('../models/project');
+var Server = require('../index');
+var helper = require('../utils/helper');
 
 
 /**
@@ -38,6 +40,7 @@ exports.createProject = function (body) {
       else if (result) {
         console.log(result)
         data.populate('client', function (err, res) {
+          Server.io.emit('projectCreated', result);
           resolve({ error: false, result: res });
         });
       }
@@ -276,7 +279,7 @@ exports.updateProjectByMembers = function (id, body) {
 exports.getProjectByMembers = function (id) {
   return new Promise(function (resolve, reject) {
 
-    project.findOne({'members.userId': { '$in': id } }).populate({ path: 'client' }).exec(function (error, result) {
+    project.findOne({ 'members.userId': { '$in': id } }).populate({ path: 'client' }).exec(function (error, result) {
       console.log(result);
       console.log(error)
       if (error) {
@@ -291,10 +294,10 @@ exports.getProjectByMembers = function (id) {
   });
 }
 
-exports.deleteProjectByMemberId = function (id,userId) {
+exports.deleteProjectByMemberId = function (id, userId) {
   return new Promise(function (resolve, reject) {
 
-    project.findOneAndUpdate({ _id: id }, { $pull: { members: userId } }, {new: true }).populate({ path: 'client' }).exec(function (error, result) {
+    project.findOneAndUpdate({ _id: id }, { $pull: { members: userId } }, { new: true }).populate({ path: 'client' }).exec(function (error, result) {
       console.log(result);
       console.log(error)
       if (error) {

@@ -1,6 +1,7 @@
 'use strict';
 var Bill = require('../models/bill');
-
+var Server = require('../index');
+var helper = require('../utils/helper');
 
 /**
  * Create client
@@ -31,7 +32,11 @@ exports.createBill = function (body) {
 
                 return;
             }
-            resolve({ error: false, result: bill });
+            else{
+                Server.io.emit('billCreated',result);
+                resolve({ error: false, result: bill });
+            }
+            
         })
 
     });

@@ -62,7 +62,6 @@ exports.sendmail = function (body) {
                 }
                 else if (result) {
                     ccto = result.email;
-console.log("fgxfg--------------",ccto)
 
                     htmlToSend = template(replacements);
                     mailOptions = {

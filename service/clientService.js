@@ -1,6 +1,7 @@
 'use strict';
 var Client = require('../models/client');
-
+var Server = require('../index');
+var helper = require('../utils/helper');
 
 /**
  * Create client
@@ -43,7 +44,11 @@ exports.createClient = function (body) {
 
         return;
       }
-      resolve({ error: false, result: client });
+      else{
+        Server.io.emit('clientCreated',result);
+        resolve({ error: false, result: client });
+      }
+      
     })
 
   });
