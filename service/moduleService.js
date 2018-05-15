@@ -34,7 +34,7 @@ exports.createmodule = function (body) {
 exports.getmodule = function (id) {
     return new Promise(function (resolve, reject) {
        
-        moduleService.find({_id: id })
+        moduleService.findOne({_id: id })
             .sort({ "createdDate": -1 })
             .exec(function (err, modules) {
                 if (err) {
