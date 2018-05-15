@@ -672,7 +672,7 @@ paths:
           description: Invalid user supplied
         '404':
           description: project not found
-      x-swagger-router-controller: Project    
+      x-swagger-router-controller: Project
   '/project/{id}':
     get:
       security:
@@ -754,7 +754,7 @@ paths:
           description: Project not found
       x-swagger-router-controller: Project
   /project/getbymemberId:
-     get:
+    get:
       security:
         - key: []
       tags:
@@ -969,7 +969,7 @@ paths:
           description: Invalid Module Id supplied
         '404':
           description: Module not found
-      x-swagger-router-controller: Module 
+      x-swagger-router-controller: Module
     put:
       security:
         - key: []
@@ -1021,9 +1021,9 @@ paths:
           description: Invalid module supplied
         '404':
           description: module not found
-      x-swagger-router-controller: Module  
+      x-swagger-router-controller: Module
   /module/getbyprojectid:
-     get:
+    get:
       security:
         - key: []
       tags:
@@ -1049,14 +1049,14 @@ paths:
           description: Invalid Module Id supplied
         '404':
           description: Module not found
-      x-swagger-router-controller: Module 
+      x-swagger-router-controller: Module
   /submodule:
     post:
       security:
         - key: []
       tags:
         - submodule
-      summary: submodule 
+      summary: submodule
       description: This enables a user to create.
       operationId: createsubmodule
       produces:
@@ -1072,7 +1072,7 @@ paths:
       responses:
         default:
           description: successful operation
-      x-swagger-router-controller: Submodule  
+      x-swagger-router-controller: Submodule
   '/submodule/{id}':
     get:
       security:
@@ -1100,7 +1100,7 @@ paths:
           description: Invalid Module Id supplied
         '404':
           description: Module not found
-      x-swagger-router-controller: Submodule 
+      x-swagger-router-controller: Submodule
     put:
       security:
         - key: []
@@ -1129,7 +1129,7 @@ paths:
           description: Invalid user supplied
         '404':
           description: project not found
-      x-swagger-router-controller: Submodule 
+      x-swagger-router-controller: Submodule
     delete:
       security:
         - key: []
@@ -1152,7 +1152,7 @@ paths:
           description: Invalid module supplied
         '404':
           description: module not found
-      x-swagger-router-controller: Submodule 
+      x-swagger-router-controller: Submodule
   /submodule/getbymoduleid:
     get:
       security:
@@ -1187,7 +1187,7 @@ paths:
         - key: []
       tags:
         - task
-      summary: task 
+      summary: task
       description: This enables a user to create.
       operationId: createtask
       produces:
@@ -1203,7 +1203,7 @@ paths:
       responses:
         default:
           description: successful operation
-      x-swagger-router-controller: Task  
+      x-swagger-router-controller: Task
   '/task/{id}':
     get:
       security:
@@ -1231,7 +1231,7 @@ paths:
           description: Invalid Module Id supplied
         '404':
           description: Module not found
-      x-swagger-router-controller: Task 
+      x-swagger-router-controller: Task
     put:
       security:
         - key: []
@@ -1260,7 +1260,7 @@ paths:
           description: Invalid user supplied
         '404':
           description: task not found
-      x-swagger-router-controller: Task 
+      x-swagger-router-controller: Task
     delete:
       security:
         - key: []
@@ -1283,7 +1283,7 @@ paths:
           description: Invalid module supplied
         '404':
           description: module not found
-      x-swagger-router-controller: Task 
+      x-swagger-router-controller: Task
   /task/addassignto:
     put:
       security:
@@ -1313,7 +1313,7 @@ paths:
           description: Invalid user supplied
         '404':
           description: task not found
-      x-swagger-router-controller: Task 
+      x-swagger-router-controller: Task
   /task/deleteassignto:
     put:
       security:
@@ -1343,7 +1343,35 @@ paths:
           description: Invalid user supplied
         '404':
           description: task not found
-      x-swagger-router-controller: Task     
+      x-swagger-router-controller: Task
+  /task/getbysubmoduleid:
+    get:
+      security:
+        - key: []
+      tags:
+        - submodule
+      summary: Get task by submodule id
+      description: ''
+      operationId: gettaskBySubmoduleId
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Task'
+        '400':
+          description: Invalid Module Id supplied
+        '404':
+          description: Module not found
+      x-swagger-router-controller: Task    
 definitions:
   User:
     type: object
@@ -1551,12 +1579,12 @@ definitions:
   Deletemember:
     type: object
     properties:
-      userId: 
+      userId:
         type: string
     example:
       userId: userId
     xml:
-      name: Deletemember  
+      name: Deletemember
   Module:
     type: object
     properties:
@@ -1571,7 +1599,7 @@ definitions:
       description: description
       projectId: projectId
     xml:
-      name: Module 
+      name: Module
   Submodule:
     type: object
     properties:
@@ -1601,7 +1629,7 @@ definitions:
       description: description
       submoduleId: moduleId
     xml:
-      name: Task 
+      name: Task
   addMember:
     type: object
     properties:
@@ -1610,11 +1638,4 @@ definitions:
     example:
       userId: assignTo
     xml:
-      name: addMember 
-
-
-
-
-
-
-
+      name: addMember
