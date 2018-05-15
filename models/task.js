@@ -10,6 +10,9 @@ const taskSchema = mongoose.Schema({
         default:'New',
         enum:['New','Inprogess','Completed']
     }, 
+    description:{
+        type: String  
+    },
     startDate: {
         type: Date
     },
