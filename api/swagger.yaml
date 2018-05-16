@@ -134,7 +134,7 @@ paths:
         - key: []
       tags:
         - user
-      summary: Logs out current logged in user session
+      summary: Logs out current logged fin user session
       description: ''
       operationId: logoutUser
       produces:
@@ -1624,10 +1624,16 @@ definitions:
         type: string
       submoduleId:
         type: string
+      startDate:
+        type: string 
+      endDate:
+        type: string   
     example:
       name: name
       description: description
       submoduleId: moduleId
+      startDate: startDate
+      endDate: endDate
     xml:
       name: Task
   addMember:
