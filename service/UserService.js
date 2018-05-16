@@ -109,7 +109,7 @@ exports.deleteUser = function (id) {
  **/
 exports.getUserById = function (id) {
   return new Promise(function (resolve, reject) {
-    User.findOne({ _id: id }).populate({ path: 'manager' }).exec(function (error, user) {
+    User.findOne({ _id: id }).populate({ path: 'manager' }).sort({ "createdDate": -1 }).exec(function (error, user) {
       console.log(user);
       console.log(error)
       if (error) {
@@ -135,7 +135,7 @@ exports.getUserById = function (id) {
  **/
 exports.getUserTags = function (tags) {
   return new Promise(function (resolve, reject) {
-    User.find({ tags: { $in: [tags] } }).populate({ path: 'manager' }).exec(function (error, user) {
+    User.find({ tags: { $in: [tags] } }).populate({ path: 'manager' }) .sort({ "createdDate": -1 }).exec(function (error, user) {
       console.log(user);
       console.log(error)
       if (error) {
@@ -161,7 +161,7 @@ exports.getUserTags = function (tags) {
  **/
 exports.getAllUser = function () {
   return new Promise(function (resolve, reject) {
-    User.find({}).populate({ path: 'manager' }).exec(function (error, user) {
+    User.find({}).populate({ path: 'manager' }) .sort({ "createdDate": -1 }).exec(function (error, user) {
       console.log(user);
       console.log(error)
       if (error) {
