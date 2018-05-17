@@ -353,6 +353,34 @@ paths:
         '404':
           description: User not found
       x-swagger-router-controller: User
+  /user/findByManager:
+    get:
+      security:
+        - key: []
+      tags:
+        - user
+      summary: Get user by role
+      description: ''
+      operationId: findBymanager
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+      x-swagger-router-controller: User    
   /user/findBytags:
     get:
       security:
@@ -1371,7 +1399,7 @@ paths:
           description: Invalid Module Id supplied
         '404':
           description: Module not found
-      x-swagger-router-controller: Task    
+      x-swagger-router-controller: Task
 definitions:
   User:
     type: object
@@ -1625,9 +1653,9 @@ definitions:
       submoduleId:
         type: string
       startDate:
-        type: string 
+        type: string
       endDate:
-        type: string   
+        type: string
     example:
       name: name
       description: description

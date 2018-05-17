@@ -94,6 +94,18 @@ module.exports.findByRole = function findByRole (req, res, next) {
 };
 
 
+module.exports.findBymanager = function findBymanager (req, res, next) {
+  var id = req.swagger.params['id'].value;
+  User.findBymanager(id)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
 module.exports.userDashboardDetails = function userDashboardDetails (req, res, next) {
   var id = req.swagger.params['id'].value;
   User.userDashboardDetails(id)

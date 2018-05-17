@@ -287,6 +287,27 @@ exports.findByRole = function (role) {
   });
 }
 
+/*Api to get the user list by thier manger*/
+
+
+exports.findBymanager = function (id) {
+  return new Promise(function (resolve, reject) {
+    console.log(id);
+    User.find({ manager: id }, (error, result) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (result) {
+        resolve({ error: false, result: result });
+      }
+      else
+        resolve({ error: true, message: "No such Manager found" })
+    })
+  });
+}
+
+
 /* Api to get the user dashboard details by user id
 */
 exports.userDashboardDetails = function (id) {
