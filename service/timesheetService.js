@@ -38,9 +38,11 @@ exports.createtimesheet = function (body) {
 
 exports.gettimesheet = function (userId,createdDate) {
     return new Promise(function (resolve, reject) {
+       
+        console.log(createdDate);
 
-        timesheet.findOne({ _id: userId })
-            .sort({ "createdDate": createdDate})
+        timesheet.findOne({userId: userId },
+           { "createdDate": createdDate})
             .exec(function (err, result) {
                 if (err) {
                     reject({ error: true, message: err });
@@ -58,8 +60,10 @@ exports.gettimesheet = function (userId,createdDate) {
 exports.getById = function (id) {
     return new Promise(function (resolve, reject) {
 
-        timesheet.findOne({ _id: id })
+        timesheet.findOne({_id: id })
             .exec(function (err, result) {
+                console.log(err);
+                console.log(result);
                 if (err) {
                     reject({ error: true, message: err });
                 }

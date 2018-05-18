@@ -18,7 +18,7 @@ module.exports.createtimesheet = function createtimesheet(req, res, next) {
 module.exports.gettimesheet = function gettimesheet(req, res, next) {
     var userId = req.swagger.params['userId'].value;
     var createdDate = req.swagger.params['createdDate'].value;
-    timesheet.gettimesheet(id,createdDate)
+    timesheet.gettimesheet(userId,createdDate)
         .then(function (response) {
             utils.writeJson(res, response);
         })
@@ -43,7 +43,8 @@ module.exports.updatetimesheet = function updatetimesheet(req, res, next) {
 
 module.exports.getById = function getById(req, res, next) {
     var id = req.swagger.params['id'].value;
-    timesheet.gettimesheet(id)
+    console.log(id);
+    timesheet.getById(id)
         .then(function (response) {
             utils.writeJson(res, response);
         })

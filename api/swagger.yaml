@@ -1493,7 +1493,7 @@ paths:
         - application/xml
         - application/json
       parameters:
-        - name: id
+        - name: userId
           in: query
           description: The id of the timesheet
           required: true
