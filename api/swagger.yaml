@@ -1400,6 +1400,119 @@ paths:
         '404':
           description: Module not found
       x-swagger-router-controller: Task
+  /timesheet:
+    post:
+      security:
+        - key: []
+      tags:
+        - timesheet
+      summary: timesheet
+      description: This enables a user to create.
+      operationId: createtimesheet
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created timesheet object
+          required: true
+          schema:
+            $ref: '#/definitions/Timesheet'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: Timesheet
+  '/timesheet/{id}':
+    get:
+      security:
+        - key: []
+      tags:
+        - timesheet
+      summary: Get timesheet by id
+      description: ''
+      operationId: getById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Timesheet'
+        '400':
+          description: Invalid Module Id supplied
+        '404':
+          description: Module not found
+      x-swagger-router-controller: Timesheet
+    put:
+      security:
+        - key: []
+      tags:
+        - timesheet
+      summary: Updated timesheet
+      description: This can only be done by the logged in user.
+      operationId: updatetimesheet
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/Timesheet'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: task not found
+      x-swagger-router-controller: Timesheet 
+  /timesheet/getbyUseridandDate:
+    get:
+      security:
+        - key: []
+      tags:
+        - timesheet
+      summary: Get timesheet by  id
+      description: ''
+      operationId: gettimesheet
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: The id of the timesheet
+          required: true
+          type: string
+        - name: createdDate
+          in: query
+          description: The created dtae for the user
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Timesheet'
+        '400':
+          description: Invalid Module Id supplied
+        '404':
+          description: Module not found
+      x-swagger-router-controller: Timesheet    
 definitions:
   User:
     type: object
@@ -1673,3 +1786,22 @@ definitions:
       userId: assignTo
     xml:
       name: addMember
+  Timesheet:
+    type: object
+    properties:
+      userId:
+        type: string
+      purpose:
+        type: string
+      startTime:
+        type: string
+      endTime:
+        type: string
+    example:
+      userId: name
+      purpose: purpose
+      startTime: startTime
+      endTime: endTime
+    xml:
+      name: Timesheet
+      
