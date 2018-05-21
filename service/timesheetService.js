@@ -36,19 +36,19 @@ exports.createtimesheet = function (body) {
 /* Api to get the timesheet by task id*/
 
 
-exports.gettimesheet = function (userId,createdDate) {
+exports.gettimesheet = function (userId, createdDate) {
     return new Promise(function (resolve, reject) {
-       
+
         console.log(createdDate);
 
-        timesheet.findOne({userId: userId },
-           { "createdDate": createdDate})
+        timesheet.find({ userId: userId ,
+             "createdDate": createdDate })
             .exec(function (err, result) {
                 if (err) {
                     reject({ error: true, message: err });
                 }
                 else {
-                    resolve({ error: false, result: result,message: "User timesheet get successfully " });
+                    resolve({ error: false, result: result, message: "User timesheet get successfully " });
 
                 }
             });
@@ -60,7 +60,7 @@ exports.gettimesheet = function (userId,createdDate) {
 exports.getById = function (id) {
     return new Promise(function (resolve, reject) {
 
-        timesheet.findOne({_id: id })
+        timesheet.findOne({ _id: id })
             .exec(function (err, result) {
                 console.log(err);
                 console.log(result);
@@ -68,7 +68,7 @@ exports.getById = function (id) {
                     reject({ error: true, message: err });
                 }
                 else {
-                    resolve({ error: false, result: result,message: "User timesheet get successfully " });
+                    resolve({ error: false, result: result, message: "User timesheet get successfully " });
 
                 }
             });
