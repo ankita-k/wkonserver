@@ -16,6 +16,9 @@ const timesheetSchema = mongoose.Schema({
     endTime: {
         type: String
     },
+    date:{
+        type: Date, 
+    },
     createdBy: {
         type: Schema.ObjectId,
         ref: 'user'

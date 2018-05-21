@@ -1,5 +1,7 @@
 'use strict';
 var timesheet = require('../models/timesheet');
+var moment = require('moment');
+
 
 
 /**
@@ -11,11 +13,20 @@ var timesheet = require('../models/timesheet');
  **/
 exports.createtimesheet = function (body) {
     return new Promise(function (resolve, reject) {
+
+
+        let date = moment(new Date(body.date)).utcOffset(0);
+        date.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+        date.toISOString();
+        date = date.format();
+        console.log(date);
+
         var data = new timesheet(body);
         data.name = body.userId;
         data.descritpion = body.purpose;
         data.submoduleId = body.startTime;
         data.endTime = body.endTime;
+        data.date = date;
         data.createdBy = body.userId;
         data.updatedBy = body.userId;
         data.createdDate = Date.now();
@@ -39,10 +50,16 @@ exports.createtimesheet = function (body) {
 exports.gettimesheet = function (userId, createdDate) {
     return new Promise(function (resolve, reject) {
 
+        createdDate = moment(new Date(createdDate)).utcOffset(0);
+        createdDate.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+        createdDate.toISOString();
+        createdDate = createdDate.format();
         console.log(createdDate);
 
-        timesheet.find({ userId: userId ,
-             "createdDate": createdDate })
+        timesheet.find({
+            userId: userId,
+            date: createdDate 
+        })
             .exec(function (err, result) {
                 if (err) {
                     reject({ error: true, message: err });
