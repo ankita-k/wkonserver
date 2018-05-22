@@ -3,9 +3,6 @@ var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 
-
-
-
 const projectSchema = mongoose.Schema({
 
     name: {

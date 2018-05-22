@@ -39,6 +39,7 @@ exports.gettask = function (id) {
 
         task.find({ _id: id })
             .sort({ "createdDate": -1 })
+            .populate({ path: 'submoduleId.moduleId.projectId' })
             .exec(function (err, tasks) {
                 if (err) {
                     reject({ error: true, message: err });
