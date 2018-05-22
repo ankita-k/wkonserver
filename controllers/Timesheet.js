@@ -31,7 +31,7 @@ module.exports.gettimesheet = function gettimesheet(req, res, next) {
 module.exports.updatetimesheet = function updatetimesheet(req, res, next) {
     var id = req.swagger.params['id'].value;
     var body = req.swagger.params['body'].value;
-    task.updatetimesheet(id, body)
+    timesheet.updatetimesheet(id, body)
         .then(function (response) {
             utils.writeJson(res, response);
         })
@@ -53,7 +53,17 @@ module.exports.getById = function getById(req, res, next) {
         });
 };
 
-
+module.exports.updatetimesheetTaskById = function updatetimesheetTaskById(req, res, next) {
+    var id = req.swagger.params['id'].value;
+    var body = req.swagger.params['body'].value;
+    timesheet.updatetimesheetTaskById(id, body)
+        .then(function (response) {
+            utils.writeJson(res, response);
+        })
+        .catch(function (response) {
+            utils.writeJson(res, response);
+        });
+};
 
 
 

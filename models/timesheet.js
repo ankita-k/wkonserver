@@ -19,6 +19,10 @@ const timesheetSchema = mongoose.Schema({
     date:{
         type: Date, 
     },
+    taskId:{
+        type: Schema.ObjectId,
+        ref: 'task'
+    },
     createdBy: {
         type: Schema.ObjectId,
         ref: 'user'

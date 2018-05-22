@@ -58,7 +58,7 @@ exports.gettimesheet = function (userId, createdDate) {
 
         timesheet.find({
             userId: userId,
-            date: createdDate 
+            date: createdDate
         })
             .exec(function (err, result) {
                 if (err) {
@@ -78,6 +78,7 @@ exports.getById = function (id) {
     return new Promise(function (resolve, reject) {
 
         timesheet.findOne({ _id: id })
+        .populate({ path: 'taskId.submoduleId.moduleId.projectId' })
             .exec(function (err, result) {
                 console.log(err);
                 console.log(result);
@@ -91,8 +92,6 @@ exports.getById = function (id) {
             });
     });
 }
-
-
 
 
 
@@ -118,6 +117,25 @@ exports.updatetimesheet = function (id, body) {
 }
 
 
+/**update timesheet by task id*/
+exports.updatetimesheetTaskById = function (id, body) {
+    return new Promise(function (resolve, reject) {
+
+        body.updatedDate = Date.now();
+        timesheet.findOneAndUpdate({ _id: id }, { $set: { taskId: body.taskId } }, { new: true }, (error, task) => {
+            console.log(task);
+            console.log(error)
+            if (error) {
+                reject(error);
+                return;
+            }
+            else if (task)
+                resolve({ error: false, result: task });
+            else
+                resolve({ error: true, message: "No such timesheet found" })
+        })
+    });
+}
 
 
 

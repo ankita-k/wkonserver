@@ -1479,7 +1479,37 @@ paths:
           description: Invalid user supplied
         '404':
           description: task not found
-      x-swagger-router-controller: Timesheet 
+      x-swagger-router-controller: Timesheet
+  /timesheet/updateTask:    
+    put:
+      security:
+        - key: []
+      tags:
+        - timesheet
+      summary: Updated timesheet
+      description: This can only be done by the logged in user.
+      operationId: updatetimesheetTaskById
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/Timesheet'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: task not found
+      x-swagger-router-controller: Timesheet     
   /timesheet/getbyUseridandDate:
     get:
       security:
@@ -1799,12 +1829,15 @@ definitions:
         type: string
       endTime:
         type: string
+      taskId: 
+        type: string  
     example:
       userId: name
       date: date
       purpose: purpose
       startTime: startTime
       endTime: endTime
+      taskId: taskId
     xml:
       name: Timesheet
       
