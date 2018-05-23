@@ -66,6 +66,14 @@ taskSchema.pre('find', function (next) {
     next();
 });
 
+taskSchema.pre('find', function (next) {
+    this.populate('assignTo.userId');
+    next();
+});
 
+taskSchema.pre('findOne', function (next) {
+    this.populate('assignTo.userId');
+    next();
+});
 
 const task = module.exports = mongoose.model('task', taskSchema);

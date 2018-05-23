@@ -61,6 +61,7 @@ exports.gettask = function (id) {
 
 
 /* Api to get the task by user id, date and  status completed*/
+
 exports.gettaskByuserId = function (id, createdDate) {
     return new Promise(function (resolve, reject) {
         createdDate = moment(new Date(createdDate)).utcOffset(0);
