@@ -1,6 +1,6 @@
 'use strict';
 var task = require('../models/task');
-
+var moment = require('moment');
 
 /**
  * Create task
@@ -11,11 +11,19 @@ var task = require('../models/task');
  **/
 exports.createtask = function (body) {
     return new Promise(function (resolve, reject) {
+
+        let date = moment(new Date(body.date)).utcOffset(0);
+        date.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+        date.toISOString();
+        date = date.format();
+        console.log(date);
+
         var data = new task(body);
         data.name = body.name;
         data.description = body.description;
         data.submoduleId = body.submoduleId;
         data.createdBy = body.userId;
+        data.date = date;
         data.updatedBy = body.userId;
         data.createdDate = Date.now();
         data.updatedDate = Date.now();
@@ -32,8 +40,6 @@ exports.createtask = function (body) {
 }
 
 /* Api to get the task by task id*/
-
-
 exports.gettask = function (id) {
     return new Promise(function (resolve, reject) {
 
@@ -51,6 +57,32 @@ exports.gettask = function (id) {
             });
     });
 }
+
+
+
+/* Api to get the task by user id, date and  status completed*/
+exports.gettaskByuserId = function (id, createdDate) {
+    return new Promise(function (resolve, reject) {
+        createdDate = moment(new Date(createdDate)).utcOffset(0);
+        createdDate.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+        createdDate.toISOString();
+        createdDate = createdDate.format();
+        console.log(createdDate);
+
+        task.find({ 'assignTo.userId': { '$in': id }, date: createdDate ,  status: 'Completed' })
+            .populate({ path: 'submoduleId.moduleId.projectId' })
+            .exec(function (err, tasks) {
+                if (err) {
+                    reject({ error: true, message: err });
+                }
+                else {
+                    resolve({ error: false, result: tasks });
+
+                }
+            });
+    });
+}
+
 
 /*Api to get the task by sub module id */
 
@@ -132,7 +164,7 @@ exports.updatetaskmember = function (id, body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.id;
         body.updatedDate = Date.now();
-        task.findOneAndUpdate({ _id: id }, { $push: { assignTo: body.assignTo } }, { new: true }, (error, task) => {
+        task.findOneAndUpdate({ _id: id }, { $push: { assignTo: body } }, { new: true }, (error, task) => {
             console.log(task);
             console.log(error)
             if (error) {

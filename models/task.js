@@ -13,6 +13,9 @@ const taskSchema = mongoose.Schema({
     description:{
         type: String  
     },
+    date:{
+        type: Date
+    },
     startDate: {
         type: Date
     },
@@ -20,8 +23,10 @@ const taskSchema = mongoose.Schema({
         type: Date
     },
     assignTo:[{
-        type: Schema.ObjectId,
-        ref: 'user'
+        userId:{
+            type: Schema.ObjectId,
+            ref: 'user'
+        }  
     }],
     submoduleId: {
         type: Schema.ObjectId,

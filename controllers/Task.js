@@ -30,6 +30,20 @@ module.exports.gettask = function gettask(req, res, next) {
 
 
 
+module.exports.gettaskByuserId = function gettaskByuserId(req, res, next) {
+    var userId = req.swagger.params['userId'].value;
+    var createdDate = req.swagger.params['createdDate'].value;
+    task.gettaskByuserId(userId,createdDate)
+        .then(function (response) {
+            utils.writeJson(res, response);
+        })
+        .catch(function (response) {
+            utils.writeJson(res, response);
+        });
+};
+
+
+
 module.exports.gettaskBySubmoduleId = function gettaskBySubmoduleId(req, res, next) {
     var id = req.swagger.params['id'].value;
     task.gettaskBySubmoduleId(id)
