@@ -68,10 +68,22 @@ exports.gettaskByuserId = function (id, createdDate) {
         createdDate.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
         createdDate.toISOString();
         createdDate = createdDate.format();
-        console.log(createdDate);
 
-        task.find({ 'assignTo.userId': { '$in': id }, date: createdDate ,  status: 'Completed' })
-            .populate({ path: 'submoduleId.moduleId.projectId' })
+        let endDate = (Date.parse(createdDate) + 1 * 24 * 60 * 60 * 1000);
+        let to = moment(endDate).format('YYYY-MM-DDTHH:mm:ss');
+        to = moment(new Date(to)).utcOffset(0);
+        to.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+        to.toISOString();
+        to = to.format();
+       
+        console.log("created date------>", createdDate);
+        console.log("end date------------>", to);
+
+        task.find({
+            'assignTo.userId': { '$in': id },
+            date: { $gte: createdDate, $lt: to },
+            status: 'Completed'
+        }).populate({ path: 'submoduleId.moduleId.projectId' })
             .exec(function (err, tasks) {
                 if (err) {
                     reject({ error: true, message: err });
