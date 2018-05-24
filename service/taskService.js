@@ -39,6 +39,51 @@ exports.createtask = function (body) {
     });
 }
 
+
+
+/**
+ * Create task for break
+ * This can only be done by the logged in client.
+ *
+ * body client Created client object
+ * no response value expected for this operation
+ **/
+exports.createtask = function (body) {
+    return new Promise(function (resolve, reject) {
+
+        let date = moment(new Date(body.date)).utcOffset(0);
+        date.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+        date.toISOString();
+        date = date.format();
+        console.log(date);
+
+        var data = new task({
+        name :body.name,
+        description : body.description,
+        submoduleId : body.submoduleId,
+        createdBy : body.userId,
+        date : date,
+        assignTo :[],
+        updatedBy : body.userId,
+        createdDate : Date.now(),
+        updatedDate : Date.now(),
+        })
+        data.assignTo.push({userId:body.userId});
+        data.save(function (err, task) {
+            if (err) {
+                reject({ error: true, message: err });
+                return;
+            }
+            else
+                resolve({ error: false, result: task, message: "task created successfully" });
+        })
+
+    });
+}
+
+
+
+
 /* Api to get the task by task id*/
 exports.gettask = function (id) {
     return new Promise(function (resolve, reject) {
