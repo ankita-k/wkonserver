@@ -64,6 +64,8 @@ exports.createtask = function (body) {
         submoduleId : body.submoduleId,
         createdBy : body.userId,
         date : date,
+        startDate:(body.startDate?body.startDate:''),
+        endDate:(body.endDate?body.endDate:''),
         assignTo :[],
         updatedBy : body.userId,
         createdDate : Date.now(),
