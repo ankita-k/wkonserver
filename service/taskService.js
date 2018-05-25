@@ -71,7 +71,10 @@ exports.createtask = function (body) {
         createdDate : Date.now(),
         updatedDate : Date.now(),
         })
-        data.assignTo.push({userId:body.userId});
+        if(body.userId){
+            data.assignTo.push({userId:body.userId});
+        }
+       
         data.save(function (err, task) {
             if (err) {
                 reject({ error: true, message: err });
