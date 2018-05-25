@@ -128,7 +128,7 @@ exports.gettaskByuserId = function (id, createdDate) {
         task.find({
             'assignTo.userId': { '$in': id },
             date: { $gte: createdDate, $lt: to },
-            status: 'New'
+            status: 'Completed'
         }).populate({ path: 'submoduleId.moduleId.projectId' })
             .exec(function (err, tasks) {
                 if (err) {
