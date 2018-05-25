@@ -1692,7 +1692,9 @@ definitions:
       date: 
         type: string
       assignTo:
-        type: string  
+        type: string
+      status: 
+        type: string    
     example:
       name: name
       description: description
@@ -1700,7 +1702,8 @@ definitions:
       startDate: startDate
       endDate: endDate
       date: date
-      assignTo: assignTo
+      userId: userId
+      status: status
     xml:
       name: Task
   addMember:

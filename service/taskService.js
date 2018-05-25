@@ -2,42 +2,42 @@
 var task = require('../models/task');
 var moment = require('moment');
 
-/**
- * Create task
- * This can only be done by the logged in client.
- *
- * body client Created client object
- * no response value expected for this operation
- **/
-exports.createtask = function (body) {
-    return new Promise(function (resolve, reject) {
+// /**
+//  * Create task
+//  * This can only be done by the logged in client.
+//  *
+//  * body client Created client object
+//  * no response value expected for this operation
+//  **/
+// exports.createtask = function (body) {
+//     return new Promise(function (resolve, reject) {
 
-        let date = moment(new Date(body.date)).utcOffset(0);
-        date.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-        date.toISOString();
-        date = date.format();
-        console.log(date);
+//         let date = moment(new Date(body.date)).utcOffset(0);
+//         date.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+//         date.toISOString();
+//         date = date.format();
+//         console.log(date);
 
-        var data = new task(body);
-        data.name = body.name;
-        data.description = body.description;
-        data.submoduleId = body.submoduleId;
-        data.createdBy = body.userId;
-        data.date = date;
-        data.updatedBy = body.userId;
-        data.createdDate = Date.now();
-        data.updatedDate = Date.now();
-        data.save(function (err, task) {
-            if (err) {
-                reject({ error: true, message: err });
-                return;
-            }
-            else
-                resolve({ error: false, result: task, message: "task created successfully" });
-        })
+//         var data = new task(body);
+//         data.name = body.name;
+//         data.description = body.description;
+//         data.submoduleId = body.submoduleId;
+//         data.createdBy = body.userId;
+//         data.date = date;
+//         data.updatedBy = body.userId;
+//         data.createdDate = Date.now();
+//         data.updatedDate = Date.now();
+//         data.save(function (err, task) {
+//             if (err) {
+//                 reject({ error: true, message: err });
+//                 return;
+//             }
+//             else
+//                 resolve({ error: false, result: task, message: "task created successfully" });
+//         })
 
-    });
-}
+//     });
+// }
 
 
 
@@ -58,6 +58,7 @@ exports.createtask = function (body) {
         console.log(date);
 
         var data = new task({
+        status:body.status,    
         name :body.name,
         description : body.description,
         submoduleId : body.submoduleId,
@@ -127,7 +128,7 @@ exports.gettaskByuserId = function (id, createdDate) {
         task.find({
             'assignTo.userId': { '$in': id },
             date: { $gte: createdDate, $lt: to },
-            status: 'Completed'
+            status: 'New'
         }).populate({ path: 'submoduleId.moduleId.projectId' })
             .exec(function (err, tasks) {
                 if (err) {
