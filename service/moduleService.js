@@ -14,18 +14,37 @@ exports.createmodule = function (body) {
         var module = new moduleService(body);
         module.name = body.name;
         module.description = body.description;
+        module.projectId = body.projectId;
         module.createdBy = body.userId;
         module.updatedBy = body.userId;
         module.createdDate = Date.now();
         module.updatedDate = Date.now();
-        module.save(function (err, module) {
+
+
+        moduleService.findOne({projectId:body.projectId}).exec(function (err, modules) {
             if (err) {
                 reject({ error: true, message: err });
-                return;
             }
-            else
-            resolve({ error: false, result: module, message:"module created successfully" });
-        })
+            else if (modules) {
+                if(modules.name == body.name){
+                    reject({ error: true, message: "Name for this module already exist " });
+                }
+                else{
+                    module.save(function (err, module) {
+                        if (err) {
+                            reject({ error: true, message: err });
+                            return;
+                        }
+                        else
+                        resolve({ error: false, result: module, message:"module created successfully" });
+                    })
+            
+                }
+            }
+            else{
+                reject({ error: true, message: "Project does not exist  with this id" });
+            }
+        });
 
     });
 }
