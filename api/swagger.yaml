@@ -1631,10 +1631,13 @@ definitions:
         type: string
       subject:
         type: string
+      userId:
+        type: string
     example:
       name: name
       email: email
       subject: subject
+      userId: userId
     xml:
       name: Email
   Deletemember:
