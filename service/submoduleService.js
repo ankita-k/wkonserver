@@ -19,14 +19,26 @@ exports.createsubmodule = function (body) {
         Submodule.updatedBy = body.userId;
         Submodule.createdDate = Date.now();
         Submodule.updatedDate = Date.now();
-        Submodule.save(function (err, submodule) {
+
+
+        submodule.findOne({moduleId:body.moduleId}) .exec(function (err, submodules) {
             if (err) {
                 reject({ error: true, message: err });
-                return;
             }
-            else
-            resolve({ error: false, result: submodule,message:"submodule created successfully" });
-        })
+            else if(submodules){
+                Submodule.save(function (err, submodule) {
+                    if (err) {
+                        reject({ error: true, message: err });
+                        return;
+                    }
+                    else
+                    resolve({ error: false, result: submodule,message:"submodule created successfully" });
+                })
+            }
+            else{
+                reject({ error: true, message: "No submodule with this id" });
+            }
+        });  
 
     });
 }

@@ -75,14 +75,26 @@ exports.createtask = function (body) {
             data.assignTo.push({userId:body.userId});
         }
        
-        data.save(function (err, task) {
+
+        task.findOne({submoduleId:body.submoduleId}).exec(function (err, tasks) {
             if (err) {
                 reject({ error: true, message: err });
-                return;
             }
-            else
-                resolve({ error: false, result: task, message: "task created successfully" });
-        })
+            else if(tasks) {
+                data.save(function (err, task) {
+                    if (err) {
+                        reject({ error: true, message: err });
+                        return;
+                    }
+                    else
+                        resolve({ error: false, result: task, message: "task created successfully" });
+                })
+
+            }
+            else {
+                reject({ error: true, message: "No any id for this  submodule" });
+            }
+        });
 
     });
 }
