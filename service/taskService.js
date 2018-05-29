@@ -76,11 +76,14 @@ exports.createtask = function (body) {
         }
 
 
-        task.find({ submoduleId: body.submoduleId, name: body.name }).exec(function (err, tasks) {
+        task.find({ submoduleId: body.submoduleId, name: data.name }).exec(function (err, tasks) {
             if (err) {
-                reject({ error: true, message: "task already exist" });
+                reject({ error: true, message: err });
             }
-            else if (tasks) {
+            else if (tasks.length>0) {
+                reject({ error: true, message: "Task already exist" });
+            }
+            else {
                 data.save(function (err, task) {
                     if (err) {
                         reject({ error: true, message: err });
@@ -91,9 +94,7 @@ exports.createtask = function (body) {
                 })
 
             }
-            else {
-                reject({ error: true, message: "No any id for this  submodule" });
-            }
+
         });
 
     });

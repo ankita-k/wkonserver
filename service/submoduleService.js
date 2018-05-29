@@ -23,9 +23,12 @@ exports.createsubmodule = function (body) {
 
         submodule.find({ moduleId: body.moduleId, name: body.name }).exec(function (err, submodules) {
             if (err) {
+                reject({ error: true, message: err });
+            }
+            else if (submodules.length>0) {
                 reject({ error: true, message: "Submodule already exist" });
             }
-            else if (submodules) {
+            else {
                 Submodule.save(function (err, submodule) {
                     if (err) {
                         reject({ error: true, message: err });
@@ -35,9 +38,7 @@ exports.createsubmodule = function (body) {
                         resolve({ error: false, result: submodule, message: "submodule created successfully" });
                 })
             }
-            else {
-                reject({ error: true, message: "No submodule with this id" });
-            }
+
         });
 
     });

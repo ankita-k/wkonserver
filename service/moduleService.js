@@ -21,24 +21,26 @@ exports.createmodule = function (body) {
         module.updatedDate = Date.now();
 
 
-        moduleService.find({projectId:body.projectId, name: body.name }).exec(function (err, modules) {
+        moduleService.find({ projectId: body.projectId, name: body.name }).exec(function (err, modules) {
+            console.log("result",modules)
+            console.log(err)
             if (err) {
                 reject({ error: true, message: err });
             }
-            else if (modules) {
-                    reject({ error: true, message: "Module already exists" });
-                }
-                else{
-                    module.save(function (err, module) {
-                        if (err) {
-                            reject({ error: true, message: err });
-                            return;
-                        }
-                        else
-                        resolve({ error: false, result: module, message:"module created successfully" });
-                    })
-            
-                }
+            else if (modules.length>0) {
+                reject({ error: true, message: "Module already exists" });
+            }
+            else {
+                module.save(function (err, module) {
+                    if (err) {
+                        reject({ error: true, message: err });
+                        return;
+                    }
+                    else
+                        resolve({ error: false, result: module, message: "module created successfully" });
+                })
+
+            }
         });
 
     });
@@ -47,8 +49,8 @@ exports.createmodule = function (body) {
 
 exports.getmodule = function (id) {
     return new Promise(function (resolve, reject) {
-       
-        moduleService.findOne({_id: id })
+
+        moduleService.findOne({ _id: id })
             .sort({ "createdDate": -1 })
             .exec(function (err, modules) {
                 if (err) {
@@ -67,8 +69,8 @@ exports.getmodule = function (id) {
 
 exports.getmoduleBYProjectId = function (id) {
     return new Promise(function (resolve, reject) {
-       
-        moduleService.find({projectId: id })
+
+        moduleService.find({ projectId: id })
             .sort({ "createdDate": -1 })
             .exec(function (err, modules) {
                 if (err) {
@@ -90,7 +92,7 @@ exports.getmoduleBYProjectId = function (id) {
  **/
 exports.deletemodule = function (id) {
     return new Promise(function (resolve, reject) {
-        moduleService.findOneAndRemove({ _id: id}  ,(error, module) => {
+        moduleService.findOneAndRemove({ _id: id }, (error, module) => {
             if (error) {
                 reject(error);
                 return;
@@ -111,7 +113,7 @@ exports.deletemodule = function (id) {
  * body client Updated client object
  * no response value expected for this operation
  **/
-exports.updatemodule = function (id,body) {
+exports.updatemodule = function (id, body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.id;
         body.updatedDate = Date.now();
