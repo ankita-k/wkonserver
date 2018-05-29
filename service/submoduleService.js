@@ -21,24 +21,24 @@ exports.createsubmodule = function (body) {
         Submodule.updatedDate = Date.now();
 
 
-        submodule.findOne({moduleId:body.moduleId}) .exec(function (err, submodules) {
+        submodule.find({ moduleId: body.moduleId, name: body.name }).exec(function (err, submodules) {
             if (err) {
-                reject({ error: true, message: err });
+                reject({ error: true, message: "Submodule already exist" });
             }
-            else if(submodules){
+            else if (submodules) {
                 Submodule.save(function (err, submodule) {
                     if (err) {
                         reject({ error: true, message: err });
                         return;
                     }
                     else
-                    resolve({ error: false, result: submodule,message:"submodule created successfully" });
+                        resolve({ error: false, result: submodule, message: "submodule created successfully" });
                 })
             }
-            else{
+            else {
                 reject({ error: true, message: "No submodule with this id" });
             }
-        });  
+        });
 
     });
 }
@@ -47,7 +47,7 @@ exports.createsubmodule = function (body) {
 
 exports.getsubmodule = function (id) {
     return new Promise(function (resolve, reject) {
-        submodule.findOne({_id: id })
+        submodule.findOne({ _id: id })
             .sort({ "createdDate": -1 })
             .exec(function (err, submodules) {
                 if (err) {
@@ -64,8 +64,8 @@ exports.getsubmodule = function (id) {
 /* Api to get the module by module id */
 exports.getsubmoduleByModule = function (id) {
     return new Promise(function (resolve, reject) {
-       
-        submodule.find({moduleId: id })
+
+        submodule.find({ moduleId: id })
             .sort({ "createdDate": -1 })
             .exec(function (err, submodules) {
                 if (err) {
@@ -88,7 +88,7 @@ exports.getsubmoduleByModule = function (id) {
  **/
 exports.deletesubmodule = function (id) {
     return new Promise(function (resolve, reject) {
-        submodule.findOneAndRemove({ _id: id } ,(error, submodule) => {
+        submodule.findOneAndRemove({ _id: id }, (error, submodule) => {
             if (error) {
                 reject(error);
                 return;
@@ -109,7 +109,7 @@ exports.deletesubmodule = function (id) {
  * body client Updated client object
  * no response value expected for this operation
  **/
-exports.updatesubmodule = function (id,body) {
+exports.updatesubmodule = function (id, body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.id;
         body.updatedDate = Date.now();

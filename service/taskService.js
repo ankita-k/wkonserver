@@ -58,29 +58,29 @@ exports.createtask = function (body) {
         console.log(date);
 
         var data = new task({
-        status:body.status,    
-        name :body.name,
-        description : body.description,
-        submoduleId : body.submoduleId,
-        createdBy : body.userId,
-        date : date,
-        startDate:(body.startDate?body.startDate:''),
-        endDate:(body.endDate?body.endDate:''),
-        assignTo :[],
-        updatedBy : body.userId,
-        createdDate : Date.now(),
-        updatedDate : Date.now(),
+            status: body.status,
+            name: body.name,
+            description: body.description,
+            submoduleId: body.submoduleId,
+            createdBy: body.userId,
+            date: date,
+            startDate: (body.startDate ? body.startDate : ''),
+            endDate: (body.endDate ? body.endDate : ''),
+            assignTo: [],
+            updatedBy: body.userId,
+            createdDate: Date.now(),
+            updatedDate: Date.now(),
         })
-        if(body.userId){
-            data.assignTo.push({userId:body.userId});
+        if (body.userId) {
+            data.assignTo.push({ userId: body.userId });
         }
-       
 
-        task.findOne({submoduleId:body.submoduleId}).exec(function (err, tasks) {
+
+        task.find({ submoduleId: body.submoduleId, name: body.name }).exec(function (err, tasks) {
             if (err) {
-                reject({ error: true, message: err });
+                reject({ error: true, message: "task already exist" });
             }
-            else if(tasks) {
+            else if (tasks) {
                 data.save(function (err, task) {
                     if (err) {
                         reject({ error: true, message: err });
@@ -98,8 +98,6 @@ exports.createtask = function (body) {
 
     });
 }
-
-
 
 
 /* Api to get the task by task id*/
@@ -138,7 +136,7 @@ exports.gettaskByuserId = function (id, createdDate) {
         to.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
         to.toISOString();
         to = to.format();
-       
+
         console.log("created date------>", createdDate);
         console.log("end date------------>", to);
 

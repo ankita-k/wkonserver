@@ -21,13 +21,12 @@ exports.createmodule = function (body) {
         module.updatedDate = Date.now();
 
 
-        moduleService.findOne({projectId:body.projectId}).exec(function (err, modules) {
+        moduleService.find({projectId:body.projectId, name: body.name }).exec(function (err, modules) {
             if (err) {
                 reject({ error: true, message: err });
             }
             else if (modules) {
-                if(modules.name == body.name){
-                    reject({ error: true, message: "Name for this module already exist " });
+                    reject({ error: true, message: "Module already exists" });
                 }
                 else{
                     module.save(function (err, module) {
@@ -40,10 +39,6 @@ exports.createmodule = function (body) {
                     })
             
                 }
-            }
-            else{
-                reject({ error: true, message: "Project does not exist  with this id" });
-            }
         });
 
     });
