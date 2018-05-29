@@ -22,12 +22,12 @@ exports.createmodule = function (body) {
 
 
         moduleService.find({ projectId: body.projectId, name: body.name }).exec(function (err, modules) {
-            console.log("result",modules)
+            console.log("result", modules)
             console.log(err)
             if (err) {
                 reject({ error: true, message: err });
             }
-            else if (modules.length>0) {
+            else if (modules.length > 0) {
                 reject({ error: true, message: "Module already exists" });
             }
             else {
@@ -117,19 +117,32 @@ exports.updatemodule = function (id, body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.id;
         body.updatedDate = Date.now();
-        moduleService.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }, (error, module) => {
-            console.log(module);
-            console.log(error)
-            if (error) {
-                reject(error);
-                return;
+        moduleService.find({ projectId: body.projectId, name: body.name }).exec(function (err, modules) {
+            console.log("result", modules)
+            console.log(err)
+            if (err) {
+                reject({ error: true, message: err });
             }
-            else if (module)
-                resolve({ error: false, result: module });
-            else
-                resolve({ error: true, message: "No such module found" })
-        })
+            else if (modules.length > 0) {
+                reject({ error: true, message: "Module already exists" });
+            }
+            else {
+                moduleService.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }, (error, module) => {
+                    console.log(module);
+                    console.log(error)
+                    if (error) {
+                        reject(error);
+                        return;
+                    }
+                    else if (module)
+                        resolve({ error: false, result: module });
+                    else
+                        resolve({ error: true, message: "No such module found" })
+                })
+            }
+        });
     });
+
 }
 
 

@@ -80,7 +80,7 @@ exports.createtask = function (body) {
             if (err) {
                 reject({ error: true, message: err });
             }
-            else if (tasks.length>0) {
+            else if (tasks.length > 0) {
                 reject({ error: true, message: "Task already exist" });
             }
             else {
@@ -212,18 +212,30 @@ exports.updatetask = function (id, body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.id;
         body.updatedDate = Date.now();
-        task.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }, (error, task) => {
-            console.log(task);
-            console.log(error)
-            if (error) {
-                reject(error);
-                return;
+
+
+        task.find({ submoduleId: body.submoduleId, name: data.name }).exec(function (err, tasks) {
+            if (err) {
+                reject({ error: true, message: err });
             }
-            else if (task)
-                resolve({ error: false, result: task });
-            else
-                resolve({ error: true, message: "No such task found" })
-        })
+            else if (tasks.length > 0) {
+                reject({ error: true, message: "Task already exist" });
+            }
+            else {
+                task.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }, (error, task) => {
+                    console.log(task);
+                    console.log(error)
+                    if (error) {
+                        reject(error);
+                        return;
+                    }
+                    else if (task)
+                        resolve({ error: false, result: task });
+                    else
+                        resolve({ error: true, message: "No such task found" })
+                })
+            }
+        });
     });
 }
 

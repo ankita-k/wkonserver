@@ -25,7 +25,7 @@ exports.createsubmodule = function (body) {
             if (err) {
                 reject({ error: true, message: err });
             }
-            else if (submodules.length>0) {
+            else if (submodules.length > 0) {
                 reject({ error: true, message: "Submodule already exist" });
             }
             else {
@@ -114,17 +114,29 @@ exports.updatesubmodule = function (id, body) {
     return new Promise(function (resolve, reject) {
         body.updatedBy = body.id;
         body.updatedDate = Date.now();
-        submodule.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }, (error, submodule) => {
-            console.log(submodule);
-            console.log(error)
-            if (error) {
-                reject(error);
-                return;
+
+        submodule.find({ moduleId: body.moduleId, name: body.name }).exec(function (err, submodules) {
+            if (err) {
+                reject({ error: true, message: err });
             }
-            else if (submodule)
-                resolve({ error: false, result: submodule });
-            else
-                resolve({ error: true, message: "No such submodule found" })
-        })
+            else if (submodules.length > 0) {
+                reject({ error: true, message: "Submodule already exist" });
+            }
+            else {
+                submodule.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }, (error, submodule) => {
+                    console.log(submodule);
+                    console.log(error)
+                    if (error) {
+                        reject(error);
+                        return;
+                    }
+                    else if (submodule)
+                        resolve({ error: false, result: submodule });
+                    else
+                        resolve({ error: true, message: "No such submodule found" })
+                })
+            }
+        });
     });
+
 }
