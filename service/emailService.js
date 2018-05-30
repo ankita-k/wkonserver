@@ -61,30 +61,46 @@ exports.sendmail = function (body) {
                     reject(error)
                 }
                 else if (result) {
-                    ccto = result.email;
+                    if (result.status == "send") {
+                        resolve({ error: true, message: "Mail already send " });
+                    }
+                    else {
+                        ccto = result.email;
 
-                    htmlToSend = template(replacements);
-                    mailOptions = {
-                        from: 'memeinfotechnotifications@gmail.com', // sender address
-                        to: email, // list of receivers
-                        subject: subject, // Subject line 
-                        html: htmlToSend,
-                        cc:['abhijit.roy@memeinfotech.com',ccto]
-                    };
+                        htmlToSend = template(replacements);
+                        mailOptions = {
+                            from: 'memeinfotechnotifications@gmail.com', // sender address
+                            to: email, // list of receivers
+                            subject: subject, // Subject line 
+                            html: htmlToSend,
+                            cc: ['abhijit.roy@memeinfotech.com', ccto]
+                        };
 
-                    // send mail with defined transport object
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                            return console.log(error);
-                        }
-                        console.log('Message sent: %s', info.messageId);
+                        // send mail with defined transport object
+                        transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                                return console.log(error);
+                            }
+                            console.log('Message sent: %s', info.messageId);
 
-                        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                        // response.send("sent mail");
+                            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                            // response.send("sent mail");
 
-                        resolve({ error: false, message: "Mail sent successfully" });
+                            resolve({ error: false, message: "Mail sent successfully" });
 
-                    });
+                        });
+                        result.status = "send";
+                        User.findOneAndUpdate({ _id: result._id }, { $set: result }, { new: true }, (error, result) => {
+                            console.log(error);
+                            console.log(result);
+                            if (error) {
+                                reject({ error: true, message: error })
+                            }
+                            else {
+                                resolve({ error: false, result: result, message: "Mail sent and status saved successfully" });
+                            }
+                        })
+                    }
 
                 }
             })

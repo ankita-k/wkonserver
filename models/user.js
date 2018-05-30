@@ -12,6 +12,9 @@ module.exports = mongoose.model('user', new Schema({
     role: {
         type: String
     },
+    status:{
+        type: String
+    },
     email: {
         type: String,
         required: true,
