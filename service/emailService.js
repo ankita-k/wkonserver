@@ -39,7 +39,7 @@ exports.sendmail = function (body) {
         var name = body.name;
         var subject = body.subject;
         var userId = body.userId
-
+console.log(body.userId)
         console.log('directory', __dirname);
 
         readHTMLFile(__dirname + '/templates/welcome.html', function (err, html) {
@@ -55,7 +55,7 @@ exports.sendmail = function (body) {
             };
 
             User.findOne({ _id: userId }, (error, result) => {
-                console.log(error);
+                console.log(error,userId);
                 console.log(result);
                 if (error) {
                     reject(error)

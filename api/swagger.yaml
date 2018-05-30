@@ -1432,7 +1432,57 @@ paths:
           description: Invalid Module Id supplied
         '404':
           description: Module not found
-      x-swagger-router-controller: Task    
+      x-swagger-router-controller: Task
+  /chat:
+    post:
+      security:
+        - key: []
+      tags:
+        - chat
+      summary: chat
+      description: This sends chat message.
+      operationId: startChat
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/chat'
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: chat
+  /chat/getbyprojectid:
+    get:
+      security:
+        - key: []
+      tags:
+        - chat
+      summary: Get chat by project id
+      description: ''
+      operationId: getChats
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/chat'
+        '400':
+          description: Invalid project Id supplied
+        '404':
+          description: chat not found
+      x-swagger-router-controller: chat
 definitions:
   User:
     type: object
@@ -1640,6 +1690,27 @@ definitions:
       userId: userId
     xml:
       name: Email
+  chat:
+    type: object
+    properties:
+      text:
+        type: string
+      userId:
+        type: string
+      projectId:
+        type: string
+      target:
+        type: array
+        items:
+          type: string
+    example:
+      text: this is my chat
+      userId: logged user id
+      projectId: project id
+      target: ['Everyone','Sales','Developers','Client']
+      type: 'file/text'
+    xml:
+      name: chat
   Deletemember:
     type: object
     properties:

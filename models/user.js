@@ -2,7 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
-module.exports = mongoose.model('user', new Schema({
+
+
+const userSchema = mongoose.Schema({
+
     name: {
         type: String
     },
@@ -12,7 +15,7 @@ module.exports = mongoose.model('user', new Schema({
     role: {
         type: String
     },
-    status:{
+    status: {
         type: String
     },
     email: {
@@ -54,4 +57,5 @@ module.exports = mongoose.model('user', new Schema({
         default: 0
     }
 
-}));
+});
+const user = module.exports = mongoose.model('user', userSchema) 

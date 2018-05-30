@@ -7,11 +7,19 @@ const chatSchema = mongoose.Schema({
     },
     userId: {
         type: Schema.ObjectId,
-        ref: 'submodule'
+        ref: 'user'
     },
     projectId: {
         type: Schema.ObjectId,
-        ref: 'submodule'
+        ref: 'project'
+    },
+    target: [{
+        type:String,
+        enum:['Everyone','Developers','Sales','Client']
+    }], 
+    type:{
+        type:String,
+        enum:['file','text']
     },
     createdBy: {
         type: Schema.ObjectId,
