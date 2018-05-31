@@ -1683,11 +1683,14 @@ definitions:
         type: string
       userId:
         type: string
+      clientId:
+        type: string
     example:
       name: name
       email: email
       subject: subject
       userId: userId
+      clientId: clientid
     xml:
       name: Email
   chat:

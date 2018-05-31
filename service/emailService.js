@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 // const key= 'mefysitekey';
 var handlebars = require('handlebars');
-var User = require('../models/user');
+var Client = require('../models/client');
 
 
 
@@ -38,8 +38,9 @@ exports.sendmail = function (body) {
         var email = body.email;
         var name = body.name;
         var subject = body.subject;
-        var userId = body.userId
-console.log(body.userId)
+        var userId = body.userId;
+        var clientId = body.clientId;
+        console.log(body.userId)
         console.log('directory', __dirname);
 
         readHTMLFile(__dirname + '/templates/welcome.html', function (err, html) {
@@ -54,17 +55,17 @@ console.log(body.userId)
                 name: name
             };
 
-            User.findOne({ _id: userId }, (error, result) => {
-                console.log(error,userId);
+            Client.findOne({ _id: clientId }, (error, result) => {
+                console.log(error, clientId);
                 console.log(result);
                 if (error) {
                     reject(error)
                 }
                 else if (result) {
-                    if (result.status == "send") {
+                    if (result.mailstatus) {
                         resolve({ error: true, message: "Mail already send " });
                     }
-                    else {
+                    else if (!result.mailstatus) {
                         ccto = result.email;
 
                         htmlToSend = template(replacements);
@@ -89,8 +90,8 @@ console.log(body.userId)
                             resolve({ error: false, message: "Mail sent successfully" });
 
                         });
-                        result.status = "send";
-                        User.findOneAndUpdate({ _id: result._id }, { $set: result }, { new: true }, (error, result) => {
+                        result.mailstatus = true;
+                        Client.findOneAndUpdate({ _id: result._id }, { $set: result }, { new: true }, (error, result) => {
                             console.log(error);
                             console.log(result);
                             if (error) {

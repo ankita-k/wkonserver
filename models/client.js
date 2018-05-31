@@ -40,7 +40,11 @@ module.exports = mongoose.model('client', new Schema({
         type: String,
         default: 'Interested'
     },
-    createdBy:{
+    mailstatus:{
+        type:Boolean,
+        default:false
+    },
+      createdBy:{
         type: Schema.ObjectId,
         ref: 'User'
     },
