@@ -329,7 +329,7 @@ exports.userDashboardDetails = function (id) {
           resolve({ error: false, message: "Dashboard details" })
           return;
         }
-       else{
+      //  else{
         let count = 0;
         let pipelineCount = 0;
         let totalCount = 0;
@@ -363,7 +363,7 @@ exports.userDashboardDetails = function (id) {
           }
         });
 
-       } 
+      //  } 
       }
       else {
         resolve({ error: true, message: "There is no project with any user" })

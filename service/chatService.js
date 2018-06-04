@@ -1,6 +1,9 @@
 'use strict';
 var chatService = require('../models/chat');
 var user = require('../models/user');
+var Server = require('../index');
+var helper = require('../utils/helper');
+
 
 //**/ API FOR CREATING CHAT  and populate userid and projectid*/
 exports.startChat = function (body) {
@@ -29,7 +32,9 @@ exports.startChat = function (body) {
                         reject({ error: true, message: err });  
                     }
                     else if(item){
+                        Server.io.emit('chatCreated', item);
                         resolve({ error: false, result: item, message: "chat send successfully" });
+                       
                     }
                 })
             }
