@@ -15,7 +15,7 @@ const chatSchema = mongoose.Schema({
     },
     target: [{
         type:String,
-        enum:['Everyone','Developers','Sales','Client']
+        enum:['Everyone','Developer','Sales','Client']
     }], 
     type:{
         type:String,

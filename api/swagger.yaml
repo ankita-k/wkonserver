@@ -1710,7 +1710,7 @@ definitions:
       text: this is my chat
       userId: logged user id
       projectId: project id
-      target: ['Everyone','Sales','Developers','Client']
+      target: ['Everyone','Sales','Developer','Client']
       type: 'file/text'
     xml:
       name: chat
