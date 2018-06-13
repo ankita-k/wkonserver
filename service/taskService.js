@@ -210,11 +210,12 @@ exports.deletetask = function (id) {
  **/
 exports.updatetask = function (id, body) {
     return new Promise(function (resolve, reject) {
-        body.updatedBy = body.id;
+        // body.updatedBy = body.id;
         body.updatedDate = Date.now();
+        console.log('body', body)
 
-
-        task.find({ submoduleId: body.submoduleId, name: data.name }).exec(function (err, tasks) {
+        task.find({ submoduleId: body.submoduleId, name: body.name }).exec(function (err, tasks) {
+            console.log('218', tasks, err)
             if (err) {
                 reject({ error: true, message: err });
             }
@@ -223,8 +224,8 @@ exports.updatetask = function (id, body) {
             }
             else {
                 task.findOneAndUpdate({ _id: id }, { $set: body }, { new: true }, (error, task) => {
-                    console.log(task);
-                    console.log(error)
+                    console.log('226', task);
+                    console.log('227', error)
                     if (error) {
                         reject(error);
                         return;
@@ -286,6 +287,5 @@ exports.deletetaskByassigntoId = function (id, body) {
         })
     });
 }
-
 
 
