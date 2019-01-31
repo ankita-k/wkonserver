@@ -11,7 +11,7 @@ var jsyaml = require('js-yaml');
 var serverPort = 5088;
 var cors = require('cors')
 var Cryptr = require('cryptr'),
-  cryptr = new Cryptr('thisissecretapikey');
+cryptr = new Cryptr('thisissecretapikey');
 
 
 /* socket variables */
@@ -64,7 +64,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   // Serve the Swagger documents and Swagger UI
   app.use(middleware.swaggerUi());
 
-  mongoose.connect('mongodb://localhost/wkon');
+  mongoose.connect('mongodb://127.0.0.1:27017/wkon', { useNewUrlParser: true });
   mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
   mongoose.connection.once('open', function () {
 
